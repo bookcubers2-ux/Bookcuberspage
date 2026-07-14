@@ -332,8 +332,8 @@ export const SocialFeed = ({ showTabs = true }: { showTabs?: boolean }) => {
     <>
       {/* Sticky category tabs */}
       {showTabs && (
-        <div className="sticky top-24 z-30 bg-background/95 backdrop-blur-md border-y border-border">
-          <div className="container-wide py-3 flex gap-2 overflow-x-auto">
+        <div className="bg-background border-b border-border">
+          <div className="container-wide py-3 flex gap-2 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {[{ id: "all", label: t(lang, "All", "Todas") }, ...cats.map((c) => ({ id: c.id, label: t(lang, c.title_en, c.title_es).split("—")[0].trim() }))].map(
               (tab) => (
                 <button
