@@ -87,7 +87,7 @@ const Index = () => {
       {/* HERO — full-bleed editorial (Cambridge-style) */}
       <section className="relative">
         <div className="absolute top-0 inset-x-0 h-1.5 bg-accent z-20" />
-        <div className="relative h-[56vh] min-h-[420px] w-full overflow-hidden">
+        <div className="relative h-[66vh] min-h-[520px] w-full overflow-hidden">
           <img
             src={communityPhoto}
             alt={t(lang,
@@ -97,7 +97,7 @@ const Index = () => {
             loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-navy-900/92 via-navy-900/55 to-navy-900/25" />
-          <div className="relative container-wide h-full flex flex-col justify-end pb-14 md:pb-20">
+          <div className="relative container-wide h-full flex flex-col justify-center pt-24 pb-12">
             <div className="max-w-3xl animate-fade-up">
               <span className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-white/90 mb-5">
                 <span className="h-px w-8 bg-accent inline-block" />
