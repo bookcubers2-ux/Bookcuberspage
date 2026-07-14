@@ -14,6 +14,7 @@ import communityPhoto from "@/assets/bookcubers-community.jpg";
 import innovationImg from "@/assets/programs/innovation.jpg";
 import sustainabilityImg from "@/assets/programs/sustainability.jpg";
 import educationImg from "@/assets/programs/education.jpg";
+import { SocialFeed } from "@/components/SocialFeed";
 
 const Index = () => {
   const { lang } = useLang();
@@ -86,7 +87,7 @@ const Index = () => {
       {/* HERO — full-bleed editorial (Cambridge-style) */}
       <section className="relative">
         <div className="absolute top-0 inset-x-0 h-1.5 bg-accent z-20" />
-        <div className="relative h-[82vh] min-h-[580px] w-full overflow-hidden">
+        <div className="relative h-[56vh] min-h-[420px] w-full overflow-hidden">
           <img
             src={communityPhoto}
             alt={t(lang,
@@ -143,6 +144,25 @@ const Index = () => {
         </div>
       </section>
 
+      {/* LIVE SOCIAL FEED — the first thing visitors see */}
+      <section className="pt-10 pb-2 bg-background">
+        <div className="container-wide text-center max-w-2xl mx-auto">
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <span className="h-1 w-12 bg-accent rounded-full" />
+            <span className="text-sm font-semibold uppercase tracking-[0.15em] text-accent">
+              {t(lang, "From the field", "Desde el territorio")}
+            </span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground mb-2">
+            {t(lang, "Our work, in real time", "Nuestro trabajo, en tiempo real")}
+          </h2>
+          <p className="text-muted-foreground">
+            {t(lang, "Every post is a real moment of our work — newest first.", "Cada publicación es un momento real de nuestro trabajo — lo más nuevo primero.")}
+          </p>
+        </div>
+      </section>
+      <SocialFeed />
+
       {/* ABOUT */}
       <section className="section-padding bg-background">
         <div className="container-wide max-w-4xl">
@@ -180,45 +200,6 @@ const Index = () => {
             <Button variant="outline" asChild>
               <Link to="/about">{t(lang, "Read our story", "Conoce nuestra historia")}</Link>
             </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* FROM THE FIELD */}
-      <section className="section-padding bg-background">
-        <div className="container-wide">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
-            <div className="max-w-xl">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="h-1 w-12 bg-accent rounded-full" />
-                <span className="text-sm font-semibold uppercase tracking-[0.15em] text-accent">
-                  {t(lang, "From the field", "Desde el territorio")}
-                </span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-heading font-bold text-foreground">
-                {t(lang, "Where the work happens", "Donde ocurre el trabajo")}
-              </h2>
-            </div>
-            <Button variant="ghost" asChild>
-              <Link to="/gallery" className="flex items-center gap-2 text-accent">
-                {t(lang, "See the gallery", "Ver la galería")}
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </Button>
-          </div>
-          <div className="grid sm:grid-cols-3 gap-5">
-            {[
-              { img: "/gallery/actividad-de-soberania-digital-indigena-bookcubers-en-la-comunidad-san.jpg", cap: t(lang, "Indigenous digital sovereignty — San Antonio de Lomerío", "Soberanía digital indígena — San Antonio de Lomerío") },
-              { img: "/gallery/actividad-de-capacitacion-en-media-literacy-y-el-metodo-lede-bookcuber.jpg", cap: t(lang, "Media-literacy training with the LEDE method", "Capacitación en alfabetización mediática y el método LEDE") },
-              { img: "/gallery/actividad-de-doble-helice-creativa-bookcubers-en-la-comunidad-degui-y-.jpg", cap: t(lang, "Creative workshops in the Degüí & Garay communities", "Talleres creativos en las comunidades Degüí y Garay") },
-            ].map((f) => (
-              <figure key={f.img} className="rounded-2xl overflow-hidden bg-card border border-border shadow-sm group">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img src={f.img} alt={f.cap} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                </div>
-                <figcaption className="px-4 py-3 font-heading text-[0.95rem] text-foreground leading-snug">{f.cap}</figcaption>
-              </figure>
-            ))}
           </div>
         </div>
       </section>
