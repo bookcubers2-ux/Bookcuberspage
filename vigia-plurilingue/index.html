@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vigía Plurilingüe · Fiscalización ciudadana con IA</title>
+<style>
+:root{
+  --bg:#0B0E0C; --panel:#14120E; --ink:#F4F1E9; --gold:#C9A227; --terra:#B5502E;
+  --muted:#6B7A6E; --dim:#C7C6BE; --line:rgba(244,241,233,.14);
+  --serif:Georgia,'Times New Roman',serif;
+  --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'Cascadia Mono','Consolas','SF Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;
+  min-height:100vh;padding:clamp(18px,4vw,44px)}
+.app{max-width:960px;margin:0 auto}
+
+/* título */
+.hero-title{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:20px}
+.hero-title .kick{font:600 12px/1.4 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.hero-title h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.1rem,5.5vw,3.8rem);line-height:1;letter-spacing:-.01em}
+.hero-title h1 em{font-style:italic;color:var(--gold)}
+.hero-title .hsub{font-family:var(--serif);font-style:italic;font-size:clamp(1.05rem,2vw,1.4rem);color:var(--dim);margin-top:12px}
+.manifesto-bar{border-left:3px solid var(--gold);background:rgba(201,162,39,.05);
+  padding:14px 20px;border-radius:0 8px 8px 0;margin-bottom:26px}
+.manifesto-bar p{font-family:var(--serif);font-size:clamp(1rem,1.8vw,1.2rem);line-height:1.45}
+.manifesto-bar p b{color:var(--gold)}
+.manifesto-bar .src{display:block;margin-top:8px;font:600 10.5px/1.4 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+/* stepper */
+.stepper{display:flex;gap:6px;margin-bottom:30px}
+.st{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;cursor:pointer;padding-top:4px}
+.st .dot{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;
+  font:700 14px/1 var(--sans);color:var(--muted);background:var(--bg);transition:.3s;z-index:2}
+.st .lb{font:600 11px/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;transition:.3s}
+.st::after{content:"";position:absolute;top:21px;left:50%;width:100%;height:1.5px;background:var(--line);z-index:1}
+.st:last-child::after{display:none}
+.st.active .dot{border-color:var(--gold);color:var(--gold);box-shadow:0 0 16px rgba(201,162,39,.35)}
+.st.active .lb{color:var(--ink)}
+.st.done .dot{border-color:var(--gold);background:var(--gold);color:#1a1408}
+.st.done::after{background:var(--gold)}
+
+/* paneles */
+.panel{display:none;animation:fade .4s ease}
+.panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.pk{font:600 12px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.panel h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,3.4vw,2.4rem);line-height:1.1;margin-bottom:10px}
+.pdesc{color:var(--dim);font-size:1.02rem;max-width:64ch;margin-bottom:24px}
+
+/* grabadora */
+.rec{display:flex;flex-direction:column;align-items:center;gap:16px;padding:clamp(24px,4vw,40px);
+  background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.recbtn{width:88px;height:88px;border-radius:50%;border:none;cursor:pointer;background:var(--terra);color:#fff;
+  font-size:30px;display:flex;align-items:center;justify-content:center;transition:.2s;box-shadow:0 0 0 0 rgba(181,80,46,.5)}
+.recbtn:hover{transform:scale(1.05)}
+.recbtn.on{background:#e0563020;color:var(--terra);border:2px solid var(--terra);animation:pulse 1.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(181,80,46,.45)}70%{box-shadow:0 0 0 22px rgba(181,80,46,0)}100%{box-shadow:0 0 0 0 rgba(181,80,46,0)}}
+.rectime{font:700 30px/1 var(--mono);color:var(--ink);letter-spacing:.04em}
+.meter{display:flex;gap:4px;align-items:flex-end;height:40px}
+.meter i{width:5px;height:40px;background:var(--gold);border-radius:3px;transform:scaleY(.08);transform-origin:bottom;transition:transform .08s linear;opacity:.85}
+.recstate{font-size:.92rem;color:var(--muted)}
+.recstate b{color:var(--dim)}
+.live{margin-top:16px;min-height:56px;background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:8px;
+  padding:16px 18px;font-family:var(--serif);font-size:1.05rem;line-height:1.6;color:var(--ink);white-space:pre-wrap}
+.live:empty::before{content:"La transcripción aparecerá aquí mientras hablas…";color:var(--muted);font-style:italic;font-family:var(--sans);font-size:.95rem}
+
+.orsep{text-align:center;color:var(--muted);font:600 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;margin:22px 0}
+.drop{border:1.5px dashed var(--line);border-radius:8px;padding:20px;text-align:center;cursor:pointer;transition:.2s;background:rgba(255,255,255,.012)}
+.drop.hot{border-color:var(--gold);background:rgba(201,162,39,.06)}
+.drop .big{font-family:var(--serif);font-size:1.1rem;margin-bottom:4px}
+.drop .small{color:var(--muted);font-size:.88rem}
+.drop .small b{color:var(--dim)}
+
+textarea{width:100%;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:8px;
+  padding:15px 17px;font-family:var(--sans);font-size:1.02rem;line-height:1.6;resize:vertical;margin-top:14px}
+textarea:focus{outline:none;border-color:var(--gold)}
+#transcript{min-height:180px;font-family:var(--serif)}
+
+/* botones */
+button{font-family:var(--sans);cursor:pointer;border:none;border-radius:7px;font-weight:600;transition:transform .08s,background .2s,opacity .2s}
+button:active{transform:translateY(1px)}
+button:disabled{opacity:.4;cursor:not-allowed}
+.btn-primary{background:var(--gold);color:#1a1408;padding:13px 24px;font-size:1rem}
+.btn-primary:hover:not(:disabled){background:#dab433}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line);padding:11px 17px;font-size:.94rem}
+.btn-ghost:hover:not(:disabled){border-color:var(--gold);color:var(--gold)}
+.btn-link{background:transparent;color:var(--muted);padding:10px 4px;font-size:.9rem;text-decoration:underline}
+.btn-link:hover{color:var(--gold)}
+.navrow{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:26px;flex-wrap:wrap}
+.vsel{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:10px 12px;font-family:var(--sans);font-size:.86rem;max-width:230px}
+.vsel:focus{outline:none;border-color:var(--gold)}
+
+.status{min-height:22px;font-size:.95rem;color:var(--dim);display:flex;align-items:center;gap:10px;margin:6px 0}
+.spin{width:16px;height:16px;border:2px solid var(--line);border-top-color:var(--gold);border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.err{color:var(--terra)}
+.progress{height:3px;background:var(--line);border-radius:3px;overflow:hidden;margin:12px 0;display:none}
+.progress.on{display:block}
+.progress i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s}
+
+/* columnas ES/GN */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+.col{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px}
+.col.gn{border-color:rgba(201,162,39,.35)}
+.col h4{font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.col.gn h4{color:var(--gold)}
+.col .text{font-size:1.02rem;line-height:1.7;white-space:pre-wrap}
+.col.gn .text{font-family:var(--serif)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
+.note{margin-top:14px;font-size:.85rem;color:var(--muted);line-height:1.6;border-left:2px solid var(--line);padding-left:14px}
+.note b{color:var(--dim)}
+
+/* boletín */
+.boletin{background:var(--panel);border:1px solid rgba(201,162,39,.35);border-radius:10px;padding:clamp(22px,3vw,32px);position:relative;overflow:hidden}
+.boletin::before{content:"";position:absolute;top:0;left:0;width:100%;height:4px;background:linear-gradient(90deg,var(--gold),var(--terra))}
+.boletin .bk{font:600 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--terra);margin-bottom:8px}
+.boletin h3{font-family:var(--serif);font-size:1.5rem;margin-bottom:4px}
+.boletin .date{font:600 11px/1 var(--mono);color:var(--muted);letter-spacing:.05em;margin-bottom:20px}
+.boletin .lbl{font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;margin:18px 0 8px}
+.boletin .lbl.es{color:var(--muted)} .boletin .lbl.gn{color:var(--gold)}
+.boletin .r-es{font-size:1rem;line-height:1.7;color:var(--dim)}
+.boletin .r-gn{font-family:var(--serif);font-size:1.12rem;line-height:1.7;color:var(--ink)}
+.boletin details{margin-top:20px;border-top:1px solid var(--line);padding-top:14px}
+.boletin summary{cursor:pointer;font:600 12px/1 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.boletin .full{margin-top:14px;font-size:.95rem;line-height:1.7;color:var(--dim);white-space:pre-wrap}
+.boletin .full .gn{font-family:var(--serif);color:var(--ink);display:block;margin-top:10px}
+
+.foot{margin-top:40px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem;line-height:1.7}
+
+@media(max-width:720px){.cols{grid-template-columns:1fr}.st .lb{font-size:9.5px}}
+
+/* PDF / impresión */
+#printdoc{display:none}
+@media print{
+  body{background:#fff;color:#000;padding:0}
+  body>.app{display:none}
+  #printdoc{display:block;position:absolute;inset:0;color:#000;background:#fff}
+  #printdoc h1{font-family:Georgia,serif;font-size:20pt;color:#0B0E0C;margin-bottom:2px}
+  #printdoc .pd-sub{font-family:sans-serif;font-size:8.5pt;letter-spacing:.1em;text-transform:uppercase;color:#6B7A6E;border-bottom:2px solid #C9A227;padding-bottom:9px;margin-bottom:20px}
+  #printdoc h2{font-family:sans-serif;font-size:8.5pt;letter-spacing:.14em;text-transform:uppercase;color:#B5502E;margin:20px 0 7px}
+  #printdoc .pd-gn{font-family:Georgia,serif;font-size:12pt;line-height:1.7;white-space:pre-wrap;color:#111}
+  #printdoc .pd-es{font-size:10pt;color:#555;white-space:pre-wrap;line-height:1.6}
+  #printdoc .pd-foot{margin-top:26px;padding-top:10px;border-top:1px solid #ccc;font-family:sans-serif;font-size:8pt;color:#666}
+  @page{margin:18mm}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="hero-title">
+    <div class="kick">Democracia intercultural · Fiscalización ciudadana · Santa Cruz, Bolivia</div>
+    <h1>Vigía <em>Plurilingüe</em></h1>
+    <div class="hsub">La democracia, en la lengua de cada pueblo.</div>
+  </div>
+  <div class="manifesto-bar">
+    <p>“No es un observatorio que mira de lejos: es una <b>herramienta política</b> que obliga al Estado a hablar el idioma de quienes representa.”</p>
+    <span class="src">Iniciativa de incidencia política · Foro Nacional de Jóvenes</span>
+  </div>
+
+  <!-- STEPPER -->
+  <div class="stepper" id="stepper">
+    <div class="st active" data-s="1"><span class="dot">1</span><span class="lb">Captura</span></div>
+    <div class="st" data-s="2"><span class="dot">2</span><span class="lb">Transcripción</span></div>
+    <div class="st" data-s="3"><span class="dot">3</span><span class="lb">Traducción</span></div>
+    <div class="st" data-s="4"><span class="dot">4</span><span class="lb">Devolución</span></div>
+  </div>
+
+  <!-- PASO 1 · CAPTURA -->
+  <section class="panel active" data-p="1">
+    <div class="pk">Paso 1 · Captura</div>
+    <h2>Graba la sesión de la Asamblea</h2>
+    <p class="pdesc">Vigía escucha y captura la palabra pública — el punto de partida de la fiscalización. Presiona grabar y habla (o lee un fragmento de la sesión).</p>
+    <div class="rec">
+      <button id="recBtn" class="recbtn" title="Grabar / Detener">●</button>
+      <div class="rectime" id="recTime">00:00</div>
+      <div class="meter" id="meter"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="recstate" id="recState">Listo para grabar</div>
+    </div>
+    <div class="live" id="liveText"></div>
+    <audio id="player" controls style="width:100%;margin-top:14px;display:none"></audio>
+
+    <div class="orsep">— o sin micrófono —</div>
+    <div class="drop" id="drop">
+      <div class="big">Sube un documento oficial (sesión, ley o resolución)</div>
+      <div class="small">Formatos: <b>.txt</b> y <b>.pdf</b> · o pega el texto abajo</div>
+      <input type="file" id="file" accept=".txt,.pdf,text/plain,application/pdf" hidden>
+    </div>
+    <textarea id="paste" placeholder="…o pega aquí el texto de la sesión en español." rows="3"></textarea>
+    <div class="navrow">
+      <button class="btn-link" id="ex1">Usar un ejemplo</button>
+      <button class="btn-primary" id="to2" disabled>Siguiente: Transcripción →</button>
+    </div>
+  </section>
+
+  <!-- PASO 2 · TRANSCRIPCIÓN -->
+  <section class="panel" data-p="2">
+    <div class="pk">Paso 2 · Transcripción</div>
+    <h2>Voz → texto</h2>
+    <p class="pdesc">La IA convirtió la sesión en texto, con la palabra de cada intervención. Revisa y corrige antes de traducir.</p>
+    <textarea id="transcript" placeholder="Transcripción de la sesión…"></textarea>
+    <div class="navrow">
+      <button class="btn-ghost" data-back="1">← Atrás</button>
+      <button class="btn-primary" id="to3">Traducir a guaraní →</button>
+    </div>
+  </section>
+
+  <!-- PASO 3 · TRADUCCIÓN -->
+  <section class="panel" data-p="3">
+    <div class="pk">Paso 3 · Traducción</div>
+    <h2>El debate, en guaraní</h2>
+    <p class="pdesc">Yvy.ai vuelca la sesión al guaraní. La misma lógica se extiende al chiquitano y otras lenguas del oriente, con validación de hablantes nativos.</p>
+    <div class="progress" id="prog"><i></i></div>
+    <div class="status" id="tstatus"></div>
+    <div class="cols">
+      <div class="col es"><h4>Español · original</h4><div class="text" id="outEs"></div></div>
+      <div class="col gn"><h4>Guaraní · traducción</h4><div class="text" id="outGn"></div></div>
+    </div>
+    <div class="toolbar">
+      <button class="btn-ghost" id="speak3">▶ Escuchar en guaraní</button>
+      <button class="btn-ghost" id="stop3" disabled>■ Detener</button>
+      <select class="vsel voiceSel" title="Elegir voz"></select>
+    </div>
+    <p class="note">Para una <b>voz humana natural</b>, abre esta app en <b>Microsoft Edge</b> (voces neuronales, marcadas con ★). La lectura adapta la grafía del guaraní para que fluya sin deletrear.</p>
+    <div class="navrow">
+      <button class="btn-ghost" data-back="2">← Atrás</button>
+      <button class="btn-primary" id="to4">Generar boletín ciudadano →</button>
+    </div>
+  </section>
+
+  <!-- PASO 4 · DEVOLUCIÓN -->
+  <section class="panel" data-p="4">
+    <div class="pk">Paso 4 · Devolución</div>
+    <h2>Boletín ciudadano</h2>
+    <p class="pdesc">Vigía devuelve la sesión a la comunidad: un boletín claro, en su lengua, listo para circular por radios, redes y apps.</p>
+    <div class="status" id="bstatus"></div>
+    <div class="boletin" id="boletin"></div>
+    <div class="toolbar">
+      <button class="btn-ghost" id="speak4">▶ Escuchar boletín</button>
+      <button class="btn-ghost" id="stop4" disabled>■ Detener</button>
+      <select class="vsel voiceSel" title="Elegir voz"></select>
+      <button class="btn-ghost" id="pdf">⬇ Descargar PDF</button>
+      <button class="btn-ghost" id="share">Compartir / Copiar</button>
+    </div>
+    <div class="navrow">
+      <button class="btn-ghost" data-back="3">← Atrás</button>
+      <button class="btn-link" id="restart">↺ Nueva sesión</button>
+    </div>
+  </section>
+
+  <div class="foot">
+    Vigía Plurilingüe — prototipo funcional · Cristhian Vargas Menacho · Santa Cruz, Bolivia<br>
+    Democracia intercultural · Participación política juvenil · Fiscalización ciudadana de la Asamblea Legislativa Departamental.<br>
+    Captura y transcripción por voz, traducción automática y voz: tecnologías reales; en producción, validadas con hablantes nativos.
+  </div>
+</div>
+<div id="printdoc"></div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var state={ source:'', es:'', gn:'', resES:'', resGN:'' };
+
+  /* ============ NAVEGACIÓN DE PASOS ============ */
+  function goTo(n){
+    document.querySelectorAll('.panel').forEach(function(p){ p.classList.toggle('active', +p.dataset.p===n); });
+    document.querySelectorAll('.stepper .st').forEach(function(s){
+      var sn=+s.dataset.s; s.classList.toggle('active', sn===n); s.classList.toggle('done', sn<n);
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  document.querySelectorAll('.stepper .st').forEach(function(s){
+    s.addEventListener('click', function(){ var n=+s.dataset.s; if(s.classList.contains('done')||s.classList.contains('active')) goTo(n); });
+  });
+  document.querySelectorAll('[data-back]').forEach(function(b){ b.addEventListener('click', function(){ goTo(+b.dataset.back); }); });
+
+  /* ============ PASO 1 · CAPTURA (grabación + transcripción en vivo) ============ */
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  var recognizing=false, recording=false, recog=null, finalText='';
+  var mediaStream=null, audioCtx=null, analyser=null, rafId=null, timerId=null, t0=0, mr=null, chunks=[];
+
+  function setSource(txt){ state.source=(txt||'').trim(); $('to2').disabled = !state.source; }
+  function fmt(ms){ var s=Math.floor(ms/1000); return ('0'+Math.floor(s/60)).slice(-2)+':'+('0'+(s%60)).slice(-2); }
+
+  function meterLoop(){
+    var data=new Uint8Array(analyser.frequencyBinCount);
+    var bars=$('meter').children;
+    (function draw(){
+      analyser.getByteFrequencyData(data);
+      for(var i=0;i<bars.length;i++){ var v=(data[i*2]||0)/255; bars[i].style.transform='scaleY('+Math.max(.08,v*1.4)+')'; }
+      rafId=requestAnimationFrame(draw);
+    })();
+  }
+
+  function startRec(){
+    finalText=''; $('liveText').textContent=''; $('player').style.display='none'; chunks=[];
+    navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
+      mediaStream=stream;
+      try{
+        audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+        var srcNode=audioCtx.createMediaStreamSource(stream);
+        analyser=audioCtx.createAnalyser(); analyser.fftSize=64; srcNode.connect(analyser); meterLoop();
+      }catch(e){}
+      try{
+        mr=new MediaRecorder(stream); mr.ondataavailable=function(e){ if(e.data.size)chunks.push(e.data); };
+        mr.onstop=function(){ if(chunks.length){ var blob=new Blob(chunks,{type:chunks[0].type}); var url=URL.createObjectURL(blob); $('player').src=url; $('player').style.display='block'; } };
+        mr.start();
+      }catch(e){}
+    }).catch(function(){ $('recState').innerHTML='No se pudo acceder al micrófono. Usa <b>subir</b> o <b>pegar</b> abajo.'; });
+
+    if(SR){
+      recog=new SR(); recog.lang='es-BO'; recog.continuous=true; recog.interimResults=true;
+      recog.onresult=function(e){
+        var interim='';
+        for(var i=e.resultIndex;i<e.results.length;i++){
+          var tr=e.results[i][0].transcript;
+          if(e.results[i].isFinal) finalText+=tr+' '; else interim+=tr;
+        }
+        $('liveText').textContent=(finalText+interim).trim();
+        setSource(finalText+interim);
+      };
+      recog.onerror=function(ev){ if(ev.error!=='no-speech') $('recState').textContent='Reconocimiento: '+ev.error; };
+      recog.onend=function(){ if(recognizing){ try{recog.start();}catch(e){} } };
+      try{ recog.start(); recognizing=true; }catch(e){}
+    } else {
+      $('recState').innerHTML='Tu navegador no transcribe por voz (usa <b>Chrome</b> o <b>Edge</b>). Puedes <b>subir</b> o <b>pegar</b> el texto abajo.';
+    }
+    recording=true; t0=Date.now(); timerId=setInterval(function(){ $('recTime').textContent=fmt(Date.now()-t0); }, 250);
+    $('recBtn').classList.add('on'); $('recBtn').textContent='■'; $('recState').innerHTML='<b>Grabando…</b> habla la sesión';
+  }
+  function stopRec(){
+    recording=false; recognizing=false;
+    if(recog){ try{recog.stop();}catch(e){} }
+    if(mr && mr.state!=='inactive'){ try{mr.stop();}catch(e){} }
+    if(timerId) clearInterval(timerId);
+    if(rafId) cancelAnimationFrame(rafId);
+    var bars=$('meter').children; for(var i=0;i<bars.length;i++) bars[i].style.transform='scaleY(.08)';
+    if(mediaStream) mediaStream.getTracks().forEach(function(t){t.stop();});
+    if(audioCtx){ try{audioCtx.close();}catch(e){} }
+    $('recBtn').classList.remove('on'); $('recBtn').textContent='●';
+    $('recState').innerHTML = state.source ? 'Grabación lista. Pulsa <b>Siguiente</b>.' : 'Grabación detenida.';
+    setSource(finalText);
+  }
+  $('recBtn').addEventListener('click', function(){ recording?stopRec():startRec(); });
+
+  /* subir / pegar / ejemplo */
+  var drop=$('drop'), fileInput=$('file');
+  drop.addEventListener('click', function(){ fileInput.click(); });
+  ['dragenter','dragover'].forEach(function(e){ drop.addEventListener(e,function(ev){ev.preventDefault();drop.classList.add('hot');}); });
+  ['dragleave','drop'].forEach(function(e){ drop.addEventListener(e,function(ev){ev.preventDefault();drop.classList.remove('hot');}); });
+  drop.addEventListener('drop', function(ev){ if(ev.dataTransfer.files[0]) handleFile(ev.dataTransfer.files[0]); });
+  fileInput.addEventListener('change', function(){ if(fileInput.files[0]) handleFile(fileInput.files[0]); });
+  $('paste').addEventListener('input', function(){ setSource($('paste').value); $('recState').textContent='Texto pegado.'; });
+  $('ex1').addEventListener('click', function(){
+    var ej='En la sesión ordinaria de la Asamblea Legislativa Departamental de Santa Cruz se pone a consideración el proyecto de ley sobre gestión del agua en territorios indígenas. El acceso al agua es un derecho de los pueblos originarios y debe garantizarse con la participación de las comunidades. Se aprueba remitir el proyecto a la comisión correspondiente para su tratamiento.';
+    $('paste').value=ej; setSource(ej); $('recState').textContent='Ejemplo cargado.';
+  });
+  function handleFile(f){
+    var name=(f.name||'').toLowerCase();
+    if(name.endsWith('.pdf')||f.type==='application/pdf'){ readPDF(f); }
+    else { var rd=new FileReader(); rd.onload=function(){ $('paste').value=rd.result; setSource(rd.result); $('recState').textContent='Documento cargado: '+f.name; }; rd.readAsText(f); }
+  }
+  var pdfjsReady=null;
+  function loadPdfJs(){
+    if(pdfjsReady) return pdfjsReady;
+    pdfjsReady=new Promise(function(res,rej){
+      var s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+      s.onload=function(){ window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; res(window.pdfjsLib); };
+      s.onerror=function(){ rej(new Error('No se pudo cargar el lector de PDF (¿sin internet?).')); };
+      document.head.appendChild(s);
+    });
+    return pdfjsReady;
+  }
+  function readPDF(f){
+    $('recState').textContent='Leyendo PDF…';
+    loadPdfJs().then(function(lib){
+      var rd=new FileReader();
+      rd.onload=function(){
+        lib.getDocument({data:new Uint8Array(rd.result)}).promise.then(function(pdf){
+          var pages=[], n=pdf.numPages;
+          (function next(i){
+            if(i>n){ $('paste').value=pages.join('\n\n'); setSource(pages.join('\n\n')); $('recState').textContent='PDF leído ('+n+' págs).'; return; }
+            pdf.getPage(i).then(function(p){return p.getTextContent();}).then(function(tc){ pages.push(tc.items.map(function(it){return it.str;}).join(' ')); next(i+1); });
+          })(1);
+        }).catch(function(e){ $('recState').textContent='No se pudo leer el PDF: '+e.message; });
+      };
+      rd.readAsArrayBuffer(f);
+    }).catch(function(e){ $('recState').textContent=e.message; });
+  }
+
+  $('to2').addEventListener('click', function(){ $('transcript').value=state.source; goTo(2); });
+
+  /* ============ TRADUCCIÓN ============ */
+  function chunkSent(p,max){ var parts=p.match(/[^.!?\n]+[.!?]*/g)||[p],out=[],cur=''; parts.forEach(function(s){ if((cur+s).length>max){if(cur)out.push(cur);cur=s;}else cur+=s;}); if(cur)out.push(cur); return out; }
+  function gtx(q){
+    var url='https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=gn&dt=t&q='+encodeURIComponent(q);
+    return fetch(url).then(function(r){ if(!r.ok)throw new Error('HTTP '+r.status); return r.json(); }).then(function(j){ return j[0].map(function(s){return s[0];}).join(''); });
+  }
+  async function translateText(text, onProg){
+    var paras=text.split(/\n{1,}/).map(function(s){return s.trim();}).filter(Boolean);
+    var res=[], total=0, done=0;
+    paras.forEach(function(p){ total+=(p.length<=1200?1:chunkSent(p,1200).length); });
+    for(var i=0;i<paras.length;i++){
+      var subs=paras[i].length<=1200?[paras[i]]:chunkSent(paras[i],1200); var tp=[];
+      for(var k=0;k<subs.length;k++){ tp.push(await gtx(subs[k])); done++; if(onProg)onProg(done/total); }
+      res.push(tp.join(' '));
+    }
+    return res.join('\n\n');
+  }
+  /* detecta si el motor devolvió casi el mismo texto (no tradujo: palabra suelta/repetida) */
+  function echoRatio(gn, es){
+    var wb={}; es.toLowerCase().split(/\s+/).filter(Boolean).forEach(function(w){ wb[w]=1; });
+    var wa=gn.toLowerCase().split(/\s+/).filter(Boolean);
+    if(!wa.length) return 1;
+    var common=wa.filter(function(w){ return wb[w]; }).length;
+    return common/wa.length;
+  }
+
+  $('to3').addEventListener('click', function(){
+    var t=$('transcript').value.trim();
+    if(!t){ alert('La transcripción está vacía.'); return; }
+    state.es=t; goTo(3);
+    $('outEs').textContent=t; $('outGn').textContent='';
+    $('prog').classList.add('on'); $('prog').querySelector('i').style.width='0%';
+    setStat('tstatus','Traduciendo al guaraní…','load');
+    translateText(t, function(p){ $('prog').querySelector('i').style.width=Math.round(p*100)+'%'; }).then(function(gn){
+      state.gn=gn; $('outGn').textContent=gn; $('prog').classList.remove('on');
+      if(echoRatio(gn,t)>0.8) setStat('tstatus','⚠ El texto casi no cambió: el motor no traduce bien palabras sueltas o repetidas. Prueba con una frase completa o usa "Usar un ejemplo".','err');
+      else setStat('tstatus','Traducción lista.');
+    }).catch(function(e){ setStat('tstatus','No se pudo traducir. Verifica tu internet. ('+e.message+')','err'); $('prog').classList.remove('on'); });
+  });
+
+  function setStat(id,msg,kind){ var el=$(id); el.innerHTML=''; if(kind==='load'){var s=document.createElement('span');s.className='spin';el.appendChild(s);} var t=document.createElement('span'); if(kind==='err')t.className='err'; t.textContent=msg; el.appendChild(t); }
+
+  /* ============ DEVOLUCIÓN · boletín ============ */
+  var STOP={de:1,la:1,el:1,los:1,las:1,un:1,una:1,y:1,o:1,que:1,en:1,se:1,su:1,sus:1,por:1,con:1,del:1,al:1,es:1,para:1,ser:1,como:1,mas:1,pero:1,este:1,esta:1,sobre:1,cada:1,debe:1};
+  function summarize(text,max){
+    var sents=text.match(/[^.!?]+[.!?]+/g)||[text];
+    if(sents.length<=max) return text.trim();
+    var freq={}; text.toLowerCase().split(/[^a-záéíóúñü]+/).forEach(function(w){ if(w.length>3&&!STOP[w]) freq[w]=(freq[w]||0)+1; });
+    var scored=sents.map(function(s,i){ var sc=0; s.toLowerCase().split(/[^a-záéíóúñü]+/).forEach(function(w){ sc+=freq[w]||0; }); return {s:s.trim(),sc:sc,i:i}; });
+    scored.sort(function(a,b){return b.sc-a.sc;});
+    return scored.slice(0,max).sort(function(a,b){return a.i-b.i;}).map(function(o){return o.s;}).join(' ');
+  }
+  $('to4').addEventListener('click', function(){
+    if(!state.gn){ alert('Primero genera la traducción (paso 3).'); return; }
+    goTo(4); setStat('bstatus','Generando boletín ciudadano…','load');
+    state.resES=summarize(state.es,2);
+    translateText(state.resES).then(function(rgn){
+      state.resGN=rgn; renderBoletin(); setStat('bstatus','Boletín listo para distribuir.');
+    }).catch(function(){ state.resGN=state.gn.split(/(?<=\.)\s/).slice(0,2).join(' '); renderBoletin(); setStat('bstatus','Boletín listo.'); });
+  });
+  function dateStr(){ return new Date().toLocaleDateString('es-BO',{year:'numeric',month:'long',day:'numeric'}); }
+  function renderBoletin(){
+    $('boletin').innerHTML=''
+      +'<div class="bk">Boletín ciudadano · Vigía Plurilingüe</div>'
+      +'<h3>Sesión de la Asamblea Legislativa Departamental</h3>'
+      +'<div class="date">'+dateStr()+' · Santa Cruz, Bolivia</div>'
+      +'<div class="lbl gn">Resumen en guaraní</div><div class="r-gn">'+esc(state.resGN)+'</div>'
+      +'<div class="lbl es">Resumen en español</div><div class="r-es">'+esc(state.resES)+'</div>'
+      +'<details><summary>Ver transcripción y traducción completas</summary>'
+      +'<div class="full">'+esc(state.es)+'<span class="gn">'+esc(state.gn)+'</span></div></details>';
+  }
+  function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+  /* ============ VOZ ============ */
+  var synth=window.speechSynthesis, voices=[], selVoiceName='';
+  function loadVoices(){ voices=synth?synth.getVoices():[]; }
+  function scoreVoice(v){ var s=0; if(/natural|online/i.test(v.name))s+=100; if(/es[-_]?(419|US|MX|BO|PY|AR|CO|PE|CL|EC)/i.test(v.lang))s+=20; if(/^es/i.test(v.lang))s+=10; return s; }
+  function fillVoices(){
+    loadVoices();
+    var scored=voices.map(function(v){return {v:v,s:scoreVoice(v)};}).sort(function(a,b){return b.s-a.s;});
+    if(scored[0]&&!selVoiceName) selVoiceName=scored[0].v.name;
+    document.querySelectorAll('.voiceSel').forEach(function(sel){
+      sel.innerHTML='';
+      scored.forEach(function(o){ var op=document.createElement('option'); op.value=o.v.name; op.textContent=(/natural|online/i.test(o.v.name)?'★ ':'')+o.v.name+' · '+o.v.lang; sel.appendChild(op); });
+      sel.value=selVoiceName;
+      sel.onchange=function(){ selVoiceName=sel.value; document.querySelectorAll('.voiceSel').forEach(function(o){o.value=selVoiceName;}); };
+    });
+  }
+  if(synth){ loadVoices(); fillVoices(); synth.onvoiceschanged=function(){ loadVoices(); fillVoices(); }; }
+  function pickVoice(){ return voices.slice().sort(function(a,b){return scoreVoice(b)-scoreVoice(a);})[0]||null; }
+  function guaraniPhonetic(t){
+    return t.replace(/[’‘ʼ']/g,'').replace(/[ãâ]/g,'a').replace(/[ÃÂ]/g,'A').replace(/[ẽê]/g,'e').replace(/[ẼÊ]/g,'E')
+      .replace(/[ĩî]/g,'i').replace(/[ĨÎ]/g,'I').replace(/[õô]/g,'o').replace(/[ÕÔ]/g,'O').replace(/[ũû]/g,'u').replace(/[ŨÛ]/g,'U')
+      .replace(/[ỹŷ]/g,'i').replace(/[ỸŶ]/g,'I').replace(/̃/g,'').replace(/\s+/g,' ').trim();
+  }
+  function speak(text, stopId){
+    if(!synth){ alert('Tu navegador no soporta lectura por voz.'); return; }
+    if(!text) return;
+    synth.cancel();
+    var u=new SpeechSynthesisUtterance(guaraniPhonetic(text));
+    var chosen=voices.find(function(v){return v.name===selVoiceName;})||pickVoice();
+    if(chosen){ u.voice=chosen; u.lang=chosen.lang; } else { u.lang='es-419'; }
+    var nat=chosen&&/natural|online/i.test(chosen.name);
+    u.rate=nat?.97:.85; u.pitch=nat?1:.9;
+    u.onend=function(){ if(stopId)$(stopId).disabled=true; };
+    synth.speak(u); if(stopId)$(stopId).disabled=false;
+  }
+  $('speak3').addEventListener('click', function(){ speak(state.gn,'stop3'); });
+  $('stop3').addEventListener('click', function(){ if(synth)synth.cancel(); $('stop3').disabled=true; });
+  $('speak4').addEventListener('click', function(){ speak(state.resGN||state.gn,'stop4'); });
+  $('stop4').addEventListener('click', function(){ if(synth)synth.cancel(); $('stop4').disabled=true; });
+
+  /* ============ PDF + COMPARTIR ============ */
+  $('pdf').addEventListener('click', function(){
+    var pd=$('printdoc');
+    pd.innerHTML='<h1>Vigía Plurilingüe · Boletín ciudadano</h1>'
+      +'<div class="pd-sub">Sesión de la Asamblea Legislativa Departamental · '+dateStr()+' · Santa Cruz</div>'
+      +'<h2>Resumen · Guaraní</h2><div class="pd-gn"></div>'
+      +'<h2>Resumen · Español</h2><div class="pd-es"></div>'
+      +'<h2>Traducción completa · Guaraní</h2><div class="pd-gn full-gn"></div>'
+      +'<div class="pd-foot">Traducción automática asistida — prototipo Vigía Plurilingüe. En producción, validada con hablantes nativos.</div>';
+    pd.querySelector('.pd-gn').textContent=state.resGN||state.gn;
+    pd.querySelector('.pd-es').textContent=state.resES||state.es;
+    pd.querySelector('.full-gn').textContent=state.gn;
+    window.print();
+  });
+  $('share').addEventListener('click', function(){
+    var txt='📢 BOLETÍN CIUDADANO · Vigía Plurilingüe\n'+dateStr()+' · Santa Cruz\n\n'
+      +'[Guaraní]\n'+(state.resGN||state.gn)+'\n\n[Español]\n'+(state.resES||state.es);
+    if(navigator.share){ navigator.share({title:'Boletín ciudadano · Vigía Plurilingüe',text:txt}).catch(function(){}); }
+    else if(navigator.clipboard){ navigator.clipboard.writeText(txt).then(function(){ setStat('bstatus','Boletín copiado al portapapeles — listo para pegar en WhatsApp, redes o radio.'); }); }
+  });
+
+  /* reiniciar */
+  $('restart').addEventListener('click', function(){
+    state={source:'',es:'',gn:'',resES:'',resGN:''};
+    $('paste').value=''; $('transcript').value=''; $('liveText').textContent=''; $('outEs').textContent=''; $('outGn').textContent='';
+    $('boletin').innerHTML=''; $('recTime').textContent='00:00'; $('recState').textContent='Listo para grabar';
+    $('to2').disabled=true; goTo(1);
+  });
+})();
+</script>
+</body>
+</html>

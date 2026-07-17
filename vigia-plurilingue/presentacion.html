@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vigía Plurilingüe · Fiscalización ciudadana con IA</title>
+<style>
+/* ============================================================
+   VIGÍA PLURILINGÜE — página autocontenida (offline)
+   Todo el CSS y JS en línea. Cero dependencias de red.
+   ============================================================ */
+:root{
+  --bg:#0B0E0C; --bg2:#14120E; --ink:#F4F1E9; --gold:#C9A227;
+  --terra:#B5502E; --muted:#6B7A6E; --dim:#C7C6BE; --line:rgba(244,241,233,.14);
+  --serif:Georgia,'Times New Roman','Nimbus Roman',serif;
+  --sans:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,'Cascadia Mono','Consolas','SF Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+/* grano + viñeta global muy sutiles */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 40%,transparent 55%,rgba(0,0,0,.55) 100%);
+}
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:0 clamp(22px,5vw,64px)}
+section,header,footer{position:relative;z-index:1}
+
+.kicker{font:600 12.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.serif{font-family:var(--serif)}
+.gold{color:var(--gold)} .terra{color:var(--terra)}
+em{font-style:italic}
+
+/* ---------- reveals (solo con JS; contenido visible sin JS) ---------- */
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .85s ease, transform .85s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.js .reveal[data-d="1"]{transition-delay:.12s}
+.js .reveal[data-d="2"]{transition-delay:.24s}
+.js .reveal[data-d="3"]{transition-delay:.36s}
+.js .reveal[data-d="4"]{transition-delay:.48s}
+
+/* subrayado oro que se dibuja */
+.mark{position:relative;white-space:nowrap}
+.mark::after{content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--gold);transition:width .7s cubic-bezier(.16,1,.3,1) .25s}
+.in .mark::after,.reveal.in.mark::after{width:100%}
+
+/* ============================ HERO ============================ */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(28px,7vh,90px) 0;overflow:hidden}
+.hero .wrap{width:100%}
+.corner{position:absolute;width:120px;height:120px;opacity:.5}
+.corner path{fill:none;stroke:var(--gold);stroke-width:1.4;opacity:.55;
+  stroke-dasharray:600;stroke-dashoffset:600}
+.anim .hero .corner path{animation:draw 2.6s ease forwards .3s}
+@keyframes draw{to{stroke-dashoffset:0}}
+.corner.tl{top:26px;left:26px}
+.corner.br{bottom:26px;right:26px;transform:rotate(180deg)}
+
+.membrete{margin-bottom:clamp(26px,6vh,60px)}
+.manifesto{font-family:var(--serif);font-weight:400;color:var(--ink);
+  font-size:clamp(2.6rem,7vw,5.7rem);line-height:1.03;letter-spacing:-.01em;margin:0}
+.manifesto .mline{display:block}
+.manifesto .last{color:var(--gold);font-weight:700}
+.anim .hero .mline{opacity:0;animation:lineIn .95s cubic-bezier(.16,1,.3,1) forwards}
+.anim .hero .mline:nth-child(1){animation-delay:.35s}
+.anim .hero .mline:nth-child(2){animation-delay:.72s}
+.anim .hero .mline:nth-child(3){animation-delay:1.05s}
+.anim .hero .mline:nth-child(4){animation-delay:1.4s}
+@keyframes lineIn{
+  from{opacity:0;filter:blur(12px);clip-path:inset(0 0 100% 0)}
+  to{opacity:1;filter:blur(0);clip-path:inset(0 0 -6% 0)}
+}
+.hairline{height:2px;width:88px;background:var(--gold);margin:26px 0 0;transform-origin:left;
+  transform:scaleX(1)}
+.anim .hero .hairline{transform:scaleX(0);animation:grow .6s ease forwards 1.95s}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+.lockup{margin-top:clamp(30px,5vh,52px);display:flex;flex-wrap:wrap;align-items:flex-end;
+  gap:clamp(18px,4vw,48px)}
+.wordmark{display:flex;align-items:center;gap:16px}
+.wordmark .bar{width:4px;height:46px;background:var(--gold)}
+.wordmark h1{font-family:var(--sans);font-weight:600;font-size:clamp(1.05rem,2vw,1.5rem);
+  letter-spacing:.26em;text-transform:uppercase;color:var(--ink)}
+
+/* specimen plurilingüe (morphing) */
+.specimen{display:flex;flex-direction:column;gap:4px;min-width:230px}
+.specimen .lang{font:600 12px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--terra)}
+.morph{font-family:var(--serif);font-size:clamp(2rem,4.6vw,3.4rem);line-height:1;height:1.1em;
+  color:var(--ink);white-space:nowrap}
+.morph .ltr{display:inline-block;opacity:0;transform:translateY(.32em) rotateX(62deg);
+  transition:opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1)}
+.morph .ltr.on{opacity:1;transform:none}
+.morph .ltr.out{opacity:0;transform:translateY(-.32em) rotateX(-62deg)}
+.specimen.static .morph{opacity:1}
+.anim .hero .lockup{opacity:0;animation:fadeUp .9s ease forwards 2.25s}
+.anim .hero .subhero{opacity:0;animation:fadeUp .9s ease forwards 2.5s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+.subhero{font-family:var(--serif);font-style:italic;color:var(--dim);
+  font-size:clamp(1.05rem,1.7vw,1.4rem);line-height:1.5;max-width:60ch;margin-top:clamp(28px,5vh,46px)}
+
+.scroller{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;opacity:.85}
+.scroller span{font:600 10.5px/1 var(--sans);letter-spacing:.34em;text-transform:uppercase;color:var(--muted)}
+.scroller .track{width:1px;height:46px;background:rgba(244,241,233,.2);position:relative;overflow:hidden}
+.scroller .dot{position:absolute;left:-1.5px;top:-8px;width:4px;height:8px;background:var(--gold);border-radius:2px}
+.js .scroller .dot{animation:fall 1.8s ease-in-out infinite}
+@keyframes fall{0%{top:-8px;opacity:0}20%{opacity:1}80%{opacity:1}100%{top:46px;opacity:0}}
+
+/* ============================ SECCIONES ============================ */
+.sec{padding:clamp(78px,13vh,150px) 0;border-top:1px solid var(--line)}
+.sec-head{display:flex;gap:16px;align-items:baseline;margin-bottom:34px}
+.sec-num{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:1.4rem}
+.lead{font-family:var(--serif);font-size:clamp(1.4rem,2.9vw,2.15rem);line-height:1.4;
+  max-width:24ch;color:var(--ink)}
+.body{font-size:clamp(1.02rem,1.35vw,1.18rem);line-height:1.7;color:var(--dim);max-width:62ch}
+.body+.body{margin-top:18px}
+.grid2{display:grid;grid-template-columns:200px 1fr;gap:clamp(24px,5vw,70px);align-items:start}
+.side-label{font:600 12.5px/1.5 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
+  position:sticky;top:34px}
+.anchor{color:var(--ink);font-family:var(--serif);font-style:italic}
+
+/* ---- Números 28 / 5 / 0 ---- */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,4vw,44px);
+  border-top:2px solid var(--line);border-bottom:2px solid var(--line);
+  padding:clamp(34px,6vh,60px) 0;margin:clamp(30px,6vh,56px) 0}
+.stat{text-align:center}
+.stat .fig{font-family:var(--serif);font-weight:700;font-size:clamp(4rem,10vw,8.5rem);
+  line-height:.9;color:var(--ink);display:block}
+.stat .lab{display:block;margin-top:12px;font:600 12.5px/1.45 var(--sans);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--muted);max-width:16ch;margin-inline:auto}
+.stat-zero .fig{color:var(--terra)}
+.js .stat-zero .fig{opacity:0;transform:scale(1.18)}
+.stat-zero.show .fig{opacity:1;transform:scale(1);
+  text-shadow:0 0 46px rgba(181,80,46,.55);
+  transition:opacity .5s ease,transform .65s cubic-bezier(.16,1,.3,1),text-shadow .9s ease}
+.pueblos{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:6px 0 30px}
+.chip{font:600 12px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:9px 15px}
+.chip .d{display:inline-block;width:6px;height:6px;background:var(--terra);border-radius:50%;
+  margin-right:8px;transform:translateY(-1px)}
+
+/* ---- pull quote ---- */
+.quote-wrap{background:var(--bg2);margin:0 -100vw;padding:clamp(70px,12vh,130px) 100vw}
+.quote{font-family:var(--serif);font-size:clamp(1.6rem,3.6vw,2.9rem);line-height:1.32;
+  max-width:20ch;color:var(--ink);position:relative;margin:0 auto;text-align:center}
+.quote::before{content:"\201C";position:absolute;top:-.55em;left:50%;transform:translateX(-50%);
+  font-family:var(--serif);font-size:3.4em;color:var(--gold);opacity:.5;line-height:1}
+.quote b{color:var(--gold);font-weight:700}
+
+/* ---- 4 pasos ---- */
+.steps{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(20px,3vw,34px)}
+.step{border:1px solid var(--line);border-radius:4px;padding:clamp(24px,3vw,34px);background:rgba(255,255,255,.012)}
+.step .n{font-family:var(--serif);font-weight:700;font-size:2.4rem;color:var(--gold);line-height:1}
+.step h3{font:600 15px/1.2 var(--sans);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink);margin:14px 0 10px}
+.step p{font-size:1rem;line-height:1.6;color:var(--dim)}
+.step svg{width:30px;height:30px;stroke:var(--gold);fill:none;stroke-width:1.5;
+  stroke-linecap:round;stroke-linejoin:round;margin-top:16px;opacity:.85}
+/* demo traducción viva (paso 3) */
+.demo{margin-top:18px;border-top:1px dashed var(--line);padding-top:16px}
+.demo .badge{font:600 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--terra);border:1px solid rgba(181,80,46,.4);border-radius:3px;padding:5px 8px;display:inline-block;margin-bottom:12px}
+.demo .ts{font:600 11px/1 var(--mono);color:var(--muted);letter-spacing:.05em}
+.demo .es{font-size:.98rem;color:var(--ink);margin:6px 0 10px}
+.demo .es .w{color:var(--gold);border-bottom:1px solid rgba(201,162,39,.5)}
+.demo .gn{font-family:var(--serif);font-size:1.08rem;color:var(--dim);opacity:0;transform:translateY(8px);
+  transition:opacity .7s ease,transform .7s cubic-bezier(.16,1,.3,1)}
+.demo.in .gn{opacity:1;transform:none}
+.demo .gn b{color:var(--ink);font-style:italic}
+
+/* ---- objetivos ---- */
+.obj{display:grid;grid-template-columns:60px 1fr;gap:22px;align-items:baseline;
+  padding:22px 0;border-bottom:1px solid var(--line)}
+.obj:first-child{border-top:1px solid var(--line)}
+.obj .r{font-family:var(--serif);font-style:italic;font-size:1.9rem;color:var(--gold);line-height:1}
+.obj p{font-size:clamp(1.05rem,1.5vw,1.28rem);line-height:1.55;color:var(--ink)}
+.obj p b{color:var(--gold);font-weight:600}
+.deptos{display:flex;gap:9px;margin-top:18px}
+.deptos i{width:14px;height:14px;transform:rotate(45deg);border:1.4px solid var(--terra);opacity:.28;
+  transition:opacity .4s ease,background .4s ease}
+.deptos.in i{opacity:1;background:rgba(181,80,46,.25)}
+.deptos.in i:nth-child(1){transition-delay:.05s}.deptos.in i:nth-child(2){transition-delay:.12s}
+.deptos.in i:nth-child(3){transition-delay:.19s}.deptos.in i:nth-child(4){transition-delay:.26s}
+.deptos.in i:nth-child(5){transition-delay:.33s}.deptos.in i:nth-child(6){transition-delay:.4s}
+.deptos.in i:nth-child(7){transition-delay:.47s}.deptos.in i:nth-child(8){transition-delay:.54s}
+
+/* ---- cronograma ---- */
+.timeline{position:relative;margin-top:20px}
+.rail{position:absolute;left:0;right:0;top:9px;height:2px;background:var(--line)}
+.rail .fill{position:absolute;inset:0;background:var(--gold);transform-origin:left;transform:scaleX(0);
+  transition:transform 2.1s cubic-bezier(.4,0,.2,1)}
+.timeline.in .rail .fill{transform:scaleX(1)}
+.phases{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;position:relative}
+.phase .node{width:16px;height:16px;transform:rotate(45deg);border:1.6px solid var(--gold);
+  background:var(--bg);margin-bottom:22px;opacity:.35;transition:opacity .4s,box-shadow .5s,background .4s}
+.timeline.in .phase .node{opacity:1;background:var(--gold);box-shadow:0 0 18px rgba(201,162,39,.5)}
+.timeline.in .phase:nth-child(1) .node{transition-delay:.15s}
+.timeline.in .phase:nth-child(2) .node{transition-delay:.55s}
+.timeline.in .phase:nth-child(3) .node{transition-delay:.95s}
+.timeline.in .phase:nth-child(4) .node{transition-delay:1.35s}
+.timeline.in .phase:nth-child(5) .node{transition-delay:1.75s}
+.phase .m{font:600 12px/1 var(--mono);letter-spacing:.08em;color:var(--gold);text-transform:uppercase}
+.phase h4{font:600 13px/1.25 var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin:9px 0 8px}
+.phase p{font-size:.92rem;line-height:1.5;color:var(--dim)}
+
+/* ---- por qué ahora ---- */
+.closing{background:var(--bg);text-align:center;border-top:1px solid var(--line)}
+.closing .q{font-family:var(--serif);font-size:clamp(1.9rem,4.6vw,3.5rem);line-height:1.22;
+  max-width:20ch;margin:0 auto;color:var(--ink)}
+.closing .a{font-family:var(--serif);font-size:clamp(1.15rem,2vw,1.55rem);line-height:1.5;
+  max-width:34ch;margin:34px auto 0;color:var(--dim)}
+.closing .a b{color:var(--gold);font-weight:600;font-style:italic}
+
+/* ---- glosario + footer ---- */
+.glos-wrap,.foot{background:var(--bg2)}
+.glos{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(22px,4vw,40px)}
+.term h5{font-family:var(--serif);color:var(--gold);font-size:1.3rem;letter-spacing:.02em;margin-bottom:10px}
+.term p{font-size:.98rem;line-height:1.6;color:var(--dim)}
+.foot{padding:clamp(48px,8vh,90px) 0;border-top:1px solid var(--line)}
+.foot .name{font-family:var(--serif);font-size:1.35rem;color:var(--ink)}
+.foot .meta{margin-top:10px;color:var(--muted);font-size:.95rem;line-height:1.7}
+.foot a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line)}
+.foot a:hover{color:var(--gold)}
+.foot .eje{margin-top:22px;font:600 12px/1.5 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.foot .sig{margin-top:26px;font-family:var(--serif);color:var(--muted);letter-spacing:.14em;font-size:1rem}
+.foot .sig .terra{color:var(--terra)}
+
+/* ---------- responsive ---------- */
+@media(max-width:820px){
+  .grid2{grid-template-columns:1fr}.side-label{position:static;margin-bottom:14px}
+  .steps{grid-template-columns:1fr}
+  .phases{grid-template-columns:1fr;gap:26px}.rail{display:none}
+  .phase .node{margin-bottom:12px}
+  .glos{grid-template-columns:1fr}
+  .stat .fig{font-size:clamp(3.6rem,20vw,6rem)}
+  .lockup{gap:26px}
+}
+
+/* ---------- reduced motion: todo visible, sin animación ---------- */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none!important;transition:none!important}
+  .js .reveal,.js .hero .mline,.js .hero .lockup,.js .hero .subhero{opacity:1!important;transform:none!important}
+  .js .hero .hairline{transform:scaleX(1)!important}
+  .js .stat-zero .fig{opacity:1!important;transform:none!important}
+  .rail .fill{transform:scaleX(1)!important}
+  .timeline .phase .node{opacity:1!important;background:var(--gold)!important}
+  .morph .ltr{opacity:1!important;transform:none!important}
+  .demo .gn{opacity:1!important;transform:none!important}
+  .deptos i{opacity:1!important}
+  .scroller .dot{display:none}
+}
+</style>
+</head>
+<body>
+<script>
+(function(){
+  var d=document.documentElement; d.classList.add('js');
+  var rm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  /* 'anim' oculta y anima el hero SOLO mientras está activo; un temporizador lo retira
+     para garantizar que el contenido quede visible aunque las animaciones no corran. */
+  if(!rm){ d.classList.add('anim'); setTimeout(function(){ d.classList.remove('anim'); }, 5200); }
+})();
+</script>
+
+<!-- =============================== HERO =============================== -->
+<header class="hero" id="hero">
+  <svg class="corner tl" viewBox="0 0 120 120" aria-hidden="true"><path d="M4 60 L28 36 L28 60 L52 36 M4 84 L40 48 M28 84 L52 60 L52 84 L76 60"/></svg>
+  <svg class="corner br" viewBox="0 0 120 120" aria-hidden="true"><path d="M4 60 L28 36 L28 60 L52 36 M4 84 L40 48 M28 84 L52 60 L52 84 L76 60"/></svg>
+  <div class="wrap">
+    <div class="kicker membrete">Foro Nacional de Jóvenes · Friedrich-Ebert-Stiftung Bolivia</div>
+    <p class="manifesto">
+      <span class="mline">La democracia</span>
+      <span class="mline">se ha vuelto</span>
+      <span class="mline">un acto</span>
+      <span class="mline"><span class="last">sin testigos.</span></span>
+    </p>
+    <div class="hairline"></div>
+
+    <div class="lockup">
+      <div class="wordmark"><span class="bar"></span><h1>Vigía Plurilingüe</h1></div>
+      <div class="specimen" id="specimen">
+        <div class="lang" id="mLang">ESPAÑOL</div>
+        <div class="morph" id="mWord" aria-label="palabra"></div>
+      </div>
+    </div>
+
+    <p class="subhero">Una inteligencia artificial ciudadana, abierta y plurilingüe que fiscaliza, traduce y devuelve cada sesión de la Asamblea Legislativa Departamental de Santa Cruz a la juventud y a los pueblos originarios — en sus propias lenguas y en tiempo real.</p>
+  </div>
+  <div class="scroller"><span>Desplaza</span><div class="track"><div class="dot"></div></div></div>
+</header>
+
+<!-- =============================== I. CONTEXTO =============================== -->
+<section class="sec"><div class="wrap grid2">
+  <div class="side-label reveal">I · Contexto</div>
+  <div>
+    <p class="body reveal" data-d="1">Bolivia atraviesa en 2026 una de sus crisis institucionales más profundas: fragmentación política, escasez de combustibles y dólares, desgaste del Estado Plurinacional. En <span class="mark">Santa Cruz</span> —el departamento económicamente más decisivo y demográficamente más joven del país— la <span class="mark">juventud</span> y los <span class="mark">pueblos originarios</span> desconocen lo que su propia Asamblea Legislativa Departamental discute, vota y aprueba sobre sus territorios y recursos.</p>
+    <p class="lead reveal serif" data-d="2" style="margin-top:34px">La democracia se ha vuelto un acto sin testigos.</p>
+  </div>
+</div></section>
+
+<!-- =============================== II. PROBLEMA + NÚMEROS =============================== -->
+<section class="sec"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-num">II.</span><span class="kicker">El problema</span></div>
+  <p class="body reveal" data-d="1">Las sesiones legislativas departamentales se realizan en español, sin registro accesible, sin traducción a lenguas originarias y sin sistematización pública. Se emiten resoluciones que afectan a cinco naciones indígenas del departamento sin que estas puedan seguir el debate en su lengua.</p>
+
+  <div class="stats" id="stats">
+    <div class="stat"><span class="fig" id="n28">0</span><span class="lab">Asambleístas departamentales en Santa Cruz</span></div>
+    <div class="stat"><span class="fig" id="n5">0</span><span class="lab">Naciones indígenas con territorio en el departamento</span></div>
+    <div class="stat stat-zero" id="statZero"><span class="fig">0</span><span class="lab">Sesiones traducidas oficialmente a lenguas originarias</span></div>
+  </div>
+
+  <div class="pueblos reveal">
+    <span class="chip"><span class="d"></span>Chiquitana</span>
+    <span class="chip"><span class="d"></span>Guaraní</span>
+    <span class="chip"><span class="d"></span>Ayorea</span>
+    <span class="chip"><span class="d"></span>Guaraya</span>
+    <span class="chip"><span class="d"></span>Yuracaré-mojeña</span>
+  </div>
+
+  <p class="lead reveal serif" data-d="1" style="max-width:34ch">La opacidad excluye doblemente: a la juventud por falta de información, y a los pueblos originarios por falta de lengua. Es la negación silenciosa de la democracia intercultural.</p>
+</div></section>
+
+<!-- =============================== III. PROPUESTA + QUOTE =============================== -->
+<section class="sec"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-num">III.</span><span class="kicker">La propuesta</span></div>
+  <p class="body reveal" data-d="1"><em>Vigía Plurilingüe</em> es una plataforma ciudadana de inteligencia artificial que graba, transcribe, traduce y analiza cada sesión pública de la Asamblea Legislativa Departamental de Santa Cruz. Convierte horas de debate político en información comprensible —en español, guaraní, chiquitano y otras lenguas originarias del oriente— y la devuelve, gratis y abierta, a la ciudadanía, a las naciones indígenas y a la juventud.</p>
+</div>
+<div class="quote-wrap reveal"><p class="quote">No es un observatorio que mira de lejos: es una <b>herramienta política</b> que obliga al Estado boliviano a hablar el idioma de quienes representa.</p></div>
+</section>
+
+<!-- =============================== IV. CÓMO FUNCIONA =============================== -->
+<section class="sec"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-num">IV.</span><span class="kicker">Cómo funciona</span></div>
+  <div class="steps">
+    <div class="step reveal" data-d="1">
+      <div class="n">01</div><h3>Captura</h3>
+      <p>Acceso al audio y video oficial de las sesiones, garantizado por el principio constitucional de publicidad de los actos del Estado.</p>
+      <svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg>
+    </div>
+    <div class="step reveal" data-d="2">
+      <div class="n">02</div><h3>Transcripción</h3>
+      <p>Modelos de IA convierten la voz en texto con marcas de tiempo e identifican a cada asambleísta y cada intervención.</p>
+      <svg viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h10M4 18h7"/></svg>
+    </div>
+    <div class="step reveal" data-d="3">
+      <div class="n">03</div><h3>Traducción</h3>
+      <p>El motor <em>Yvy.ai</em> vuelca el debate al guaraní, chiquitano y otras lenguas del departamento, con validación de hablantes nativos.</p>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>
+      <div class="demo" id="demo">
+        <span class="badge">Simulación de demostración</span>
+        <div class="ts">00:14:32 · Asambleísta, Distrito 7</div>
+        <div class="es">«…gestión del <span class="w">agua</span> en territorios indígenas…»</div>
+        <div class="gn">Guaraní → «…<b>y</b> ñangareko tekoha guasu…»</div>
+      </div>
+    </div>
+    <div class="step reveal" data-d="4">
+      <div class="n">04</div><h3>Devolución</h3>
+      <p>IA generativa produce boletines breves, comparaciones de votos y alertas temáticas que circulan por radios comunitarias, redes y apps móviles.</p>
+      <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zM17 8a5 5 0 0 1 0 8"/></svg>
+    </div>
+  </div>
+</div></section>
+
+<!-- =============================== V. OBJETIVOS =============================== -->
+<section class="sec"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-num">V.</span><span class="kicker">Objetivos</span></div>
+  <div class="objs">
+    <div class="obj reveal"><span class="r">i</span><p>Construir, junto a la Asamblea del Pueblo Guaraní (APG), la UAGRM y el Consejo Departamental de la Juventud, la primera plataforma ciudadana de IA de fiscalización legislativa departamental en Bolivia.</p></div>
+    <div class="obj reveal"><span class="r">ii</span><p>Traducir y devolver al menos <b>10 sesiones</b> legislativas en <b>3 lenguas</b> originarias durante el primer año.</p></div>
+    <div class="obj reveal"><span class="r">iii</span><p>Formar a <b>500 jóvenes</b> cruceños —indígenas, rurales y urbanos— en lectura crítica del proceso legislativo.</p></div>
+    <div class="obj reveal"><span class="r">iv</span><p>Producir un informe anual que compare votos, asistencia y promesas de campaña de cada asambleísta departamental.</p></div>
+    <div class="obj reveal"><span class="r">v</span><p>Liberar la metodología y el código como bien público, replicable en los otros <b>8 departamentos</b> del país.</p>
+      <div class="deptos" id="deptos"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =============================== VI. CRONOGRAMA =============================== -->
+<section class="sec"><div class="wrap">
+  <div class="sec-head reveal"><span class="sec-num">VI.</span><span class="kicker">Cronograma · doce meses</span></div>
+  <div class="timeline" id="timeline">
+    <div class="rail"><div class="fill"></div></div>
+    <div class="phases">
+      <div class="phase"><div class="node"></div><div class="m">Mes 1–2</div><h4>Alianzas</h4><p>Convenios con APG, UAGRM, Rotaract Urubó, Bookcubers, juristas constitucionalistas y radios comunitarias del oriente.</p></div>
+      <div class="phase"><div class="node"></div><div class="m">Mes 3–4</div><h4>Construcción técnica</h4><p>Motor de transcripción e integración con Yvy.ai; validación con hablantes nativos.</p></div>
+      <div class="phase"><div class="node"></div><div class="m">Mes 5–6</div><h4>Piloto</h4><p>Procesamiento, traducción y publicación de las dos primeras sesiones de la Asamblea.</p></div>
+      <div class="phase"><div class="node"></div><div class="m">Mes 7–9</div><h4>Despliegue</h4><p>Lanzamiento público; talleres con 500 jóvenes; circulación por radios y redes.</p></div>
+      <div class="phase"><div class="node"></div><div class="m">Mes 10–12</div><h4>Incidencia</h4><p>Primer informe ciudadano, audiencia pública ante la Asamblea y publicación abierta de la metodología.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- =============================== VII. POR QUÉ AHORA =============================== -->
+<section class="sec closing"><div class="wrap">
+  <p class="q reveal serif">La pregunta no es si vamos a tener una IA política en Bolivia, sino <span class="gold">quién</span> la va a controlar.</p>
+  <p class="a reveal" data-d="1">Vigía Plurilingüe propone una respuesta: que sea <b>ciudadana</b>, <b>plurilingüe</b> y construida desde el <b>oriente boliviano</b>.</p>
+</div></section>
+
+<!-- =============================== GLOSARIO =============================== -->
+<section class="sec glos-wrap"><div class="wrap">
+  <div class="kicker reveal" style="margin-bottom:30px">Términos clave</div>
+  <div class="glos">
+    <div class="term reveal" data-d="1"><h5>Yvy.ai</h5><p>Plataforma de inteligencia artificial que traduce entre el español y lenguas originarias bolivianas. Es el motor lingüístico de Vigía Plurilingüe.</p></div>
+    <div class="term reveal" data-d="2"><h5>Ñande Yvy</h5><p>Iniciativa territorial que dirijo junto a comunidades guaraníes del Chaco boliviano, con foco en documentación cultural y defensa del territorio.</p></div>
+    <div class="term reveal" data-d="3"><h5>Bookcubers</h5><p>Red latinoamericana de jóvenes lectores que co-fundé, con más de mil participantes activos en ocho países. Base juvenil de movilización.</p></div>
+  </div>
+</div></section>
+
+<!-- =============================== FOOTER =============================== -->
+<footer class="foot"><div class="wrap reveal">
+  <div class="name">Cristhian Mathias Vargas Menacho</div>
+  <div class="meta">Santa Cruz, Bolivia · <a href="mailto:cristhianvargasmenacho@gmail.com">cristhianvargasmenacho@gmail.com</a><br>Propuesta de incidencia política — Foro Nacional de Jóvenes, FES Bolivia</div>
+  <div class="eje">Democracia / Interculturalidad / Participación Política Juvenil</div>
+  <div class="sig">Palabra · Ñe'ẽ · <span class="terra">bésiro</span></div>
+</div></footer>
+
+<script>
+(function(){
+  var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Hero: la secuencia se dispara por CSS al cargar (.js), sin depender de JS ---- */
+  var hero = document.getElementById('hero');
+  var heroVisible = true;
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ heroVisible = es[0].isIntersecting; }, {threshold:.05}).observe(hero);
+  }
+
+  /* ---- Firma plurilingüe (morphing) ----
+     IMPORTANTE: confirma la grafía con un hablante nativo antes de la entrevista.
+     Puedes añadir más lenguas validadas a este arreglo. */
+  var LENGUAS = [
+    { etq:'ESPAÑOL', voz:'PALABRA' },
+    { etq:'GUARANÍ', voz:"ÑE'Ẽ" }
+  ];
+  var mWord = document.getElementById('mWord');
+  var mLang = document.getElementById('mLang');
+  function render(word){
+    mWord.innerHTML='';
+    for(var i=0;i<word.length;i++){
+      var s=document.createElement('span');
+      s.className='ltr'; s.textContent=word[i];
+      s.style.transitionDelay=(i*40)+'ms';
+      mWord.appendChild(s);
+    }
+    if(!RM){ requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      var ls=mWord.querySelectorAll('.ltr'); for(var j=0;j<ls.length;j++) ls[j].classList.add('on');
+    });});} else { var ls=mWord.querySelectorAll('.ltr'); for(var j=0;j<ls.length;j++) ls[j].classList.add('on'); }
+  }
+  var mi=0;
+  if(RM){
+    document.getElementById('specimen').classList.add('static');
+    mLang.textContent='ESPAÑOL · GUARANÍ';
+    mWord.textContent="PALABRA · ÑE'Ẽ";
+  } else {
+    setTimeout(function(){ render(LENGUAS[0].voz); }, 2600);
+    setInterval(function(){
+      if(!heroVisible) return; /* pausa el morphing cuando el hero no está a la vista (menos distracción al hablar) */
+      var ls=mWord.querySelectorAll('.ltr');
+      for(var k=0;k<ls.length;k++){ ls[k].style.transitionDelay=(k*28)+'ms'; ls[k].classList.remove('on'); ls[k].classList.add('out'); }
+      setTimeout(function(){ mi=(mi+1)%LENGUAS.length; mLang.textContent=LENGUAS[mi].etq; render(LENGUAS[mi].voz); }, 520);
+    }, 3000);
+  }
+
+  /* ---- Reveals genéricos (con respaldo si no hay IntersectionObserver) ---- */
+  var revealEls = document.querySelectorAll('.reveal, .demo, .deptos, .timeline');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold:.18, rootMargin:'0px 0px -8% 0px' });
+    revealEls.forEach(function(el){ io.observe(el); });
+    /* red de seguridad: si algo no se reveló, hazlo visible al terminar de cargar */
+    window.addEventListener('load', function(){ setTimeout(function(){
+      revealEls.forEach(function(el){ var r=el.getBoundingClientRect(); if(r.top < window.innerHeight) el.classList.add('in'); });
+    }, 400); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---- Count-up de 28 y 5, y aparición del 0 ---- */
+  function countUp(el, to, dur){
+    if(RM){ el.textContent=to; return; }
+    var start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/dur,1);
+      var e=1-Math.pow(1-p,3); el.textContent=Math.round(e*to);
+      if(p<1) requestAnimationFrame(step); else el.textContent=to; }
+    requestAnimationFrame(step);
+  }
+  var statsBox=document.getElementById('stats'), statsDone=false;
+  function runStats(){ if(statsDone)return; statsDone=true;
+    countUp(document.getElementById('n28'),28,1200);
+    countUp(document.getElementById('n5'),5,1200);
+    setTimeout(function(){ document.getElementById('statZero').classList.add('show'); }, RM?0:1800);
+  }
+  if('IntersectionObserver' in window){
+    var io2=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ runStats(); io2.disconnect(); } });
+    }, { threshold:.4 });
+    io2.observe(statsBox);
+  } else { runStats(); }
+})();
+</script>
+</body>
+</html>
