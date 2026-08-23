@@ -4,7 +4,7 @@ export interface Activity {
   date: string;
   year: number;
   description: string;
-  category: 'Origin' | 'Education' | 'Sustainability' | 'Culture' | 'Youth' | 'Media Literacy' | 'Leadership' | 'Community' | 'Health' | 'International' | 'Recognition';
+  category: 'Origin' | 'Education' | 'Sustainability' | 'Culture' | 'Youth' | 'Media Literacy' | 'Leadership' | 'Community' | 'Health' | 'International' | 'Recognition' | 'AI Governance';
   sdgs: number[];
   location?: string;
   partners?: string[];
@@ -530,6 +530,30 @@ export const activities: Activity[] = [
     description: "Publication of comprehensive impact assessment documenting Bookcubers' achievements.",
     category: "Community",
     sdgs: [17]
+  },
+
+  // 2026 — AI GOVERNANCE YEAR
+  {
+    id: 55,
+    title: "First Artificial Intelligence Law Presented to the Santa Cruz Government",
+    date: "June 2026",
+    year: 2026,
+    location: "Government of Santa Cruz, Bolivia",
+    description: "We presented the first AI Law proposal to the Santa Cruz Government: artificial intelligence applied with a human-rights approach, protecting individual liberties, reducing bureaucracy and safeguarding culture. Presented with the Government's chief legal advisor, assembly members Marcelo Villagra, Elimar García and María René Álvarez, and the Government's head of technology, Jorge Claure.",
+    achievement: "Proposal accepted and now under legislative treatment; a pioneering initiative in Latin America.",
+    category: "AI Governance",
+    sdgs: [16, 9, 10]
+  },
+  {
+    id: 56,
+    title: "CJIAL AI Audit of 9 Private Companies (DATEC)",
+    date: "July 2026",
+    year: 2026,
+    location: "DATEC headquarters, Banco Mercantil Santa Cruz Tower",
+    description: "Through our CJIAL council, and together with DATEC and the Bolivia-Argentina Bilateral Chamber of Commerce, we began auditing how 9 private companies apply AI, so it supports workers instead of replacing them, protects human rights and expands equality of opportunity. The audit is ongoing.",
+    category: "AI Governance",
+    sdgs: [8, 9, 16],
+    partners: ["DATEC", "Cámara Bilateral de Comercio Bolivia-Argentina"]
   }
 ];
 
@@ -551,7 +575,8 @@ export const getCategoryColor = (category: Activity['category']): string => {
     'Community': 'bg-teal-500/20 text-teal-400 border-teal-500/30',
     'Health': 'bg-red-500/20 text-red-400 border-red-500/30',
     'International': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-    'Recognition': 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+    'Recognition': 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+    'AI Governance': 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30'
   };
   return colors[category] || 'bg-muted text-muted-foreground border-border';
 };

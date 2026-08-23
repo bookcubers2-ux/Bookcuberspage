@@ -14,7 +14,8 @@ const categories = [
   'Health',
   'Media Literacy',
   'International',
-  'Recognition'
+  'Recognition',
+  'AI Governance'
 ];
 
 export default function Activities() {
@@ -35,7 +36,8 @@ export default function Activities() {
     2022: 'Expansion Year',
     2023: 'International Recognition Year',
     2024: 'High Impact Year',
-    2025: 'Global Representation Year'
+    2025: 'Global Representation Year',
+    2026: 'AI Governance Year'
   };
 
   return (

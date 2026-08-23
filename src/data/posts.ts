@@ -28,6 +28,51 @@ const vid = (src: string): PostMedia => ({ src, type: "video" });
 
 export const galleryPosts: GalleryPost[] = [
   {
+    id: "datec-audits-2026",
+    category: "ai-governance",
+    title_en: "CJIAL audits how 9 companies use AI, at DATEC's AI Experience Center",
+    title_es: "El CJIAL audita el uso de IA en 9 empresas, en el Centro de Experiencia en IA de DATEC",
+    caption_en:
+      "Together with DATEC and the Bolivia-Argentina Bilateral Chamber of Commerce, our CJIAL council launched an audit of how 9 private companies apply artificial intelligence. The companies opened their AI practices to us, and we are working with them so that AI never imposes burdens that threaten human rights or replaces people: it must remain a tool that supports workers, protects their integrity and expands economic and social equality of opportunity. The event counted on the presence of Martín Dockweiler, and the audit that began that day is still ongoing.",
+    caption_es:
+      "Junto a DATEC y la Cámara Bilateral de Comercio Bolivia-Argentina, nuestro consejo CJIAL inició una auditoría sobre cómo 9 empresas privadas aplican la inteligencia artificial. Las empresas nos abrieron sus prácticas de IA, y trabajamos con ellas para que la IA nunca imponga cargas que amenacen los derechos humanos ni reemplace a las personas: debe ser una herramienta que apoye a los trabajadores, proteja su integridad y amplíe la igualdad de oportunidades económicas y sociales. El evento contó con la presencia de Martín Dockweiler, y la auditoría que comenzó ese día sigue en curso.",
+    location_en: "DATEC headquarters, Banco Mercantil Santa Cruz Tower",
+    location_es: "Sede principal de DATEC, Torre Banco Mercantil Santa Cruz",
+    date_en: "July 2026",
+    date_es: "Julio 2026",
+    media: [
+      vid("/gallery/carlos-olivera-auditoria-ia-empresas-datec-bookcubers.mp4"),
+      img("/gallery/auditoria-ia-empresas-datec-cjial-bookcubers.jpg"),
+      img("/gallery/auditoria-ia-empresas-datec-cjial-bookcubers-2.jpg"),
+      img("/gallery/auditoria-ia-empresas-datec-cjial-bookcubers-3.jpg"),
+      img("/gallery/auditoria-ia-empresas-datec-cjial-bookcubers-4.jpg"),
+    ],
+  },
+  {
+    id: "ley-ia-gobernacion-2026",
+    category: "ai-governance",
+    title_en: "We presented the first AI Law to the Santa Cruz Government, and it was accepted",
+    title_es: "Presentamos la primera Ley de IA a la Gobernación de Santa Cruz, y fue aceptada",
+    caption_en:
+      "We presented the first Artificial Intelligence Law proposal to the Government of Santa Cruz, a pioneering initiative in Latin America: AI applied with a human-rights approach, protecting individual liberties, reducing bureaucracy and safeguarding our culture. The proposal was accepted and is now under legislative treatment. At the table: the Government's chief legal advisor, assembly members Marcelo Villagra, Elimar García and María René Álvarez, the Government's head of technology Jorge Claure, and the Bookcubers team.",
+    caption_es:
+      "Presentamos la primera propuesta de Ley de Inteligencia Artificial a la Gobernación de Santa Cruz, una iniciativa pionera en Latinoamérica: IA aplicada con enfoque de derechos humanos, protegiendo las libertades individuales, reduciendo la burocracia y resguardando nuestra cultura. La propuesta fue aceptada y ahora está en tratamiento legislativo. En la mesa: el asesor jurídico de la Gobernación, los asambleístas Marcelo Villagra, Elimar García y María René Álvarez, el encargado de tecnología de la Gobernación Jorge Claure, y el equipo de Bookcubers.",
+    location_en: "Government of Santa Cruz, Bolivia",
+    location_es: "Gobernación de Santa Cruz, Bolivia",
+    date_en: "June 2026",
+    date_es: "Junio 2026",
+    media: [
+      img("/gallery/presentacion-ley-ia-gobernacion-santa-cruz-bookcubers.jpg"),
+      img("/gallery/presentacion-ley-ia-gobernacion-santa-cruz-bookcubers-2.jpg"),
+      img("/gallery/presentacion-ley-ia-gobernacion-santa-cruz-bookcubers-3.jpg"),
+      img("/gallery/presentacion-ley-ia-gobernacion-santa-cruz-bookcubers-4.jpg"),
+      img("/gallery/presentacion-ley-ia-gobernacion-santa-cruz-bookcubers-5.jpg"),
+      img("/gallery/presentacion-ley-ia-gobernacion-santa-cruz-bookcubers-6.jpg"),
+      img("/gallery/presentacion-ley-ia-gobernacion-santa-cruz-bookcubers-7.jpg"),
+      img("/gallery/presentacion-ley-ia-gobernacion-santa-cruz-bookcubers-8.jpg"),
+    ],
+  },
+  {
     id: "ylf-japan-2026",
     category: "global",
     pinned: true,
