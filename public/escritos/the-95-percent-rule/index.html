@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The 95 Percent Rule · Carlos Andres Olivera Caballero</title>
+<meta name="author" content="Carlos Andres Olivera Caballero">
+<meta name="description" content="A Bolivian region is about to let AI draft its government&#x27;s decisions. The bill&#x27;s most interesting clause is the one that watches the humans. An analysis of Departmental Bill 421/2026 of Santa Cruz, Bolivia, by Carlos Andres Olivera Caballero.">
+<meta property="og:title" content="The 95 Percent Rule">
+<meta property="og:description" content="A Bolivian region is about to let AI draft its government&#x27;s decisions. The bill&#x27;s most interesting clause is the one that watches the humans.">
+<meta property="og:type" content="article">
+<meta property="article:author" content="Carlos Andres Olivera Caballero">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+  :root {
+    --bg:#FBF7F0; --surface:#FFFFFF; --ink:#1C1B18; --ink-2:#5A544A; --line:#DCD3C4;
+    --accent:#8A3B12; --green:#004d00; --scale:1; --lh:1.7; --ls:0; --font:"Source Serif 4", Georgia, serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]):not([data-contrast="high"]) {
+      --bg:#15140F; --surface:#1E1C17; --ink:#F1ECE2; --ink-2:#B9B1A3; --line:#3A362D; --accent:#F0A56B; --green:#7BD37B; color-scheme: dark;
+    }
+  }
+  :root[data-contrast="high"] { --bg:#FFFFFF; --surface:#FFFFFF; --ink:#000000; --ink-2:#000000; --line:#000000; --accent:#6B2600; --green:#003300; }
+  :root[data-calm="on"] { --lh:2; --ls:0.02em; --font:"Atkinson Hyperlegible", Verdana, sans-serif; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; }
+  body { background:var(--bg); color:var(--ink); font-family:var(--font); font-size:calc(1.125rem * var(--scale)); line-height:var(--lh); letter-spacing:var(--ls); }
+  a { color:var(--accent); text-underline-offset:3px; text-decoration-thickness:2px; }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+  .skip { position:absolute; left:1rem; top:-5rem; background:var(--ink); color:var(--bg); padding:.7rem 1rem; z-index:10; font-family:"Atkinson Hyperlegible",sans-serif; }
+  .skip:focus { top:1rem; }
+  .bar { position:sticky; top:0; z-index:5; background:var(--surface); border-bottom:1px solid var(--line); font-family:"Atkinson Hyperlegible",sans-serif; font-size:.95rem; }
+  .bar .in { max-width:72rem; margin:0 auto; padding:.5rem 1rem; display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; }
+  .bar .brand { font-weight:700; margin-right:auto; color:var(--green); text-decoration:none; }
+  .bar button { font:inherit; border:1px solid var(--line); background:var(--bg); color:var(--ink); padding:.35rem .7rem; border-radius:6px; cursor:pointer; min-height:2.5rem; }
+  .bar button[aria-pressed="true"] { background:var(--ink); color:var(--bg); }
+  header.hero { max-width:44rem; margin:0 auto; padding:3.5rem 1.25rem 1.5rem; }
+  .kicker { font-family:"Atkinson Hyperlegible",sans-serif; text-transform:uppercase; letter-spacing:.12em; font-size:.8rem; color:var(--accent); font-weight:700; }
+  h1 { font-family:"Fraunces",Georgia,serif; font-weight:800; font-size:calc(2.5rem * var(--scale)); line-height:1.08; margin:.6rem 0; }
+  .sub { font-size:1.2em; color:var(--ink-2); font-style:italic; margin:0 0 1.4rem; }
+  .byline { font-family:"Atkinson Hyperlegible",sans-serif; font-size:.95rem; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:.8rem 0; }
+  .byline strong { font-size:1.05rem; }
+  .doc { font-family:"Atkinson Hyperlegible",sans-serif; font-size:.92rem; background:var(--surface); border-left:4px solid var(--green); padding:.8rem 1rem; margin:1.2rem 0 0; }
+  main { max-width:44rem; margin:0 auto; padding:1.5rem 1.25rem 4rem; }
+  main p { margin:0 0 1.15em; hyphens:auto; }
+  h2 { font-family:"Fraunces",Georgia,serif; font-weight:600; font-size:calc(1.5rem * var(--scale)); line-height:1.2; margin:2.4rem 0 1rem; }
+  .disclosure { font-family:"Atkinson Hyperlegible",sans-serif; font-size:.92rem; color:var(--ink-2); border-top:1px solid var(--line); padding-top:1rem; }
+  footer { max-width:44rem; margin:0 auto; padding:2rem 1.25rem 4rem; border-top:1px solid var(--line); font-family:"Atkinson Hyperlegible",sans-serif; font-size:.92rem; color:var(--ink-2); }
+  @media print { .bar, .skip { display:none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#article">Skip to the article</a>
+<div class="bar" role="region" aria-label="Reading options">
+  <div class="in">
+    <a class="brand" href="https://bookcubers.org/">Bookcubers · Writing</a>
+    <button type="button" id="less" aria-label="Decrease text size">A−</button>
+    <button type="button" id="more" aria-label="Increase text size">A+</button>
+    <button type="button" id="contrast" aria-pressed="false">High contrast</button>
+    <button type="button" id="calm" aria-pressed="false">Calm reading</button>
+    <button type="button" id="read" aria-pressed="false">Listen</button>
+  </div>
+</div>
+
+<header class="hero">
+  <p class="kicker">Analysis · AI in government</p>
+  <h1>The 95 Percent Rule</h1>
+  <p class="sub">A Bolivian region is about to let AI draft its government&#x27;s decisions. The bill&#x27;s most interesting clause is the one that watches the humans.</p>
+  <p class="byline"><strong>Carlos Andres Olivera Caballero</strong><br>Santa Cruz de la Sierra, Bolivia · 22 September 2026 · 1,274 words</p>
+  <p class="doc">The bill discussed here is public. Read the full text of Departmental Bill 421/2026, in Spanish: <a href="bill-421-2026-santa-cruz.pdf">Ley Departamental de Resolución Asistida por Inteligencia Artificial y Confirmación por Autoridad Competente (PDF)</a>.</p>
+</header>
+
+<main id="article">
+<article>
+<p>On 19 June 2026, in the chamber of the Departmental Legislative Assembly of Santa Cruz, the eastern lowland region that is Bolivia's most populous, assembly members put on blindfolds and tried to follow the reading of one of their own bills. Blind and neurodivergent citizens sat in their seats and dictated the barriers they hit. When it ended, the legislators rated their own chamber's accessibility 1.07 out of 5, a harsher score than the 1.33 the blind participants gave it.</p>
+<p>Six months later, that same chamber is scheduled to vote on Departmental Bill 421/2026, which would allow artificial intelligence to prepare the resolutions of the regional government. I helped draft it, which is why I think the first thing worth saying about it is what it does not do.</p>
+<p><strong>It creates nothing.</strong> Article 4 states that the law "does not create any council, committee, board, unit, directorate, service or position, and no provision may be interpreted to that effect", and adds that the regulation cannot create structure either. In a region where the standard answer to a new problem is a new office with a new budget line, this is the rarest clause in the text. The authority who confirms an AI-drafted resolution is the same authority who signs that act today. What changes is that she no longer starts from a blank page.</p>
+<p>The rule of the bill fits in one line: the machine prepares, the competent authority decides. Everything else in its 51 articles exists to stop that sentence from becoming a fiction.</p>
+<h2>Four locks against the rubber stamp</h2>
+<p>The failure mode of "human in the loop" is well documented, and it is not that the human is absent. It is that the human signs. Bill 421/2026 tries to make signing without reading expensive.</p>
+<p>First, the AI output is a <strong>preparatory act</strong> (Article 10): it is not an administrative act, it cannot be challenged on its own, and it produces no effect by itself. The person who answers for the decision is the official who confirms it, by name and position.</p>
+<p>Second, every proposal arrives with a <strong>warnings sheet</strong> (Article 12): the version of the system, the sources it verified, its limitations, its error rate, the assumptions it could not validate, and an explicit statement that it cannot be the sole or determining basis of the decision.</p>
+<p>Third, and this is the clause a court will eventually use, <strong>motivating by reference is prohibited under penalty of nullity</strong> (Article 14). An official cannot write "the system's proposal is adopted". Bolivian administrative law already requires material truth and a reasoned basis; the bill simply says out loud that an act grounded in "the system proposed it" is void.</p>
+<p>Fourth, <strong>silence is negative</strong> (Article 15). If the deadline passes with no decision, the proposal is treated as not confirmed and the matter continues through the ordinary route. There is no tacit confirmation, ever.</p>
+<p>Then comes the clause I did not expect to survive the drafting table. Article 38 requires every office to publish, twice a year, <strong>what share of AI proposals it confirmed without changes</strong>. If that share exceeds 95 percent, an automatic technical review is triggered, because a persistently zero modification rate is treated as evidence of merely formal confirmation.</p>
+<p>That is a measurement of the humans, not of the machine. Most AI governance instruments I have read audit the model. This one audits the signature.</p>
+<h2>Why the design is built on an error rate</h2>
+<p>The bill's own explanatory memorandum leans on a finding that deserves more attention in public administration than it gets: a Stanford RegLab study published in the Journal of Legal Analysis in 2024 measured legal hallucination in large language models at between 58 and 69 percent for general-purpose models, and as high as 88 percent in some, with purpose-built legal tools still hallucinating in one of every six to one of every three queries.</p>
+<p>A language model produces plausible text, not verified truth. An administration that forgets the difference does not get a faster state; it gets a state that is confidently wrong at scale, in writing, with a signature at the bottom.</p>
+<h2>The part that concerns the people who have to read the result</h2>
+<p>The debate over automated decisions tends to end at the official who confirms. It rarely reaches the citizen who must then read the decision and contest it. Four articles of this bill try to reach that far.</p>
+<p>Article 39.IV states that <strong>the inaccessibility of the channel is equivalent to the denial of the right</strong>. If a person cannot read the resolution that affects them, the state has not communicated a decision; it has denied one.</p>
+<p>Article 39.II makes accessibility an <strong>admissibility requirement</strong> in any procurement of these systems, not a scoring criterion that a cheaper bid can outweigh. Article 39.V says compliance with non-discrimination is verified through the participation of people with disabilities in design, not through statistical parity, which is the right call: disability is irreducibly diverse, and as the AI Now Institute put it in its work on disability and bias, adding more data does not solve the problem, it reinforces the normative model.</p>
+<p>Article 40 treats AI as an amplifier of accessibility, generating Easy Read versions, braille and speech, with a right for any person to request a version verified by a human being. Article 27 forbids publishing machine translations into Indigenous languages without validation by accredited speakers, and requires prior agreement with each people, plus payment for the speakers who do the work. In a country with 36 official Indigenous languages, that clause is the difference between a corpus and an extraction.</p>
+<p>None of this is theoretical for the numbers involved. Bolivia's 2024 census counted 588,231 people with disabilities. The state registry that any algorithm would inherit lists 118,229. Four in five are invisible to the database that would train the system.</p>
+<h2>What can still fail</h2>
+<p>Three things, and it is better to say them now than to discover them in 2028.</p>
+<p>The technical adviser of Article 17, the person who explains to the authority what the system did and with what margin of error, is a recommendation and not an obligation, precisely so the bill creates no mandatory expense. A recommendation is what gets dropped first.</p>
+<p>The public register of systems in use (Article 35) and the semiannual confirmation report are only as good as the office that publishes them, and Bolivia's record of publishing what the law requires is uneven. The regulation is due within 180 days of promulgation, and each system must run a three-month parallel pilot before deployment, which is the moment where a real timetable either exists or does not.</p>
+<p>And the bill has a single shot. Under Article 17.X of the regional statute, a bill rejected by the full assembly cannot be presented again in the same legislative period. The vote is scheduled for 3 December 2026, which happens to be the International Day of Persons with Disabilities.</p>
+<p>Santa Cruz is not the first place to face this question. It may be among the first subnational governments in Latin America to answer it in writing, before the national bill that passed Bolivia's Senate in October 2025, and which does not mention the departmental level at all, becomes law. Whether the 95 percent rule survives contact with a real office is the part I intend to keep reporting.</p>
+<p class="disclosure">Disclosure: the author co-drafted Bill 421/2026 as part of JOPÓI, a civic accessibility project implemented by the nonprofit Bookcubers with the Departmental Legislative Assembly of Santa Cruz and the Departmental Youth Council, funded in 2026 by the Community of Democracies through its Youth Democracy Network grants.</p>
+</article>
+</main>
+
+<footer>
+  <p>This page can be read with a screen reader, enlarged, switched to high contrast, listened to aloud, and read in calm mode with wider spacing. Published by the <a href="https://bookcubers.org/">Asociación Juvenil Bookcubers</a>, Santa Cruz de la Sierra, Bolivia.</p>
+  <p>© 2026 Carlos Andres Olivera Caballero.</p>
+</footer>
+
+<script>
+(function() {
+  var root = document.documentElement, scale = 1;
+  function setScale(v) { scale = Math.min(1.6, Math.max(0.85, v)); root.style.setProperty('--scale', scale); }
+  document.getElementById('more').onclick = function() { setScale(scale + 0.1); };
+  document.getElementById('less').onclick = function() { setScale(scale - 0.1); };
+  function toggle(id, attr, on) {
+    var b = document.getElementById(id);
+    b.onclick = function() {
+      var p = b.getAttribute('aria-pressed') !== 'true';
+      b.setAttribute('aria-pressed', p);
+      if (p) root.setAttribute(attr, on); else root.removeAttribute(attr);
+    };
+  }
+  toggle('contrast', 'data-contrast', 'high');
+  toggle('calm', 'data-calm', 'on');
+  var read = document.getElementById('read');
+  if (!('speechSynthesis' in window)) { read.hidden = true; return; }
+  read.onclick = function() {
+    var s = window.speechSynthesis;
+    if (read.getAttribute('aria-pressed') === 'true') { s.cancel(); read.setAttribute('aria-pressed','false'); read.textContent = 'Listen'; return; }
+    var chunks = [];
+    document.querySelectorAll('#article h2, #article p').forEach(function(n) { var t = n.textContent.trim(); if (t) chunks.push(t); });
+    chunks.forEach(function(t, i) {
+      var u = new SpeechSynthesisUtterance(t); u.lang = 'en-US'; u.rate = 0.95;
+      if (i === chunks.length - 1) u.onend = function() { read.setAttribute('aria-pressed','false'); read.textContent = 'Listen'; };
+      s.speak(u);
+    });
+    read.setAttribute('aria-pressed','true'); read.textContent = 'Stop';
+  };
+})();
+</script>
+</body>
+</html>
