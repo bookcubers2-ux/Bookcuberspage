@@ -28,6 +28,21 @@ const vid = (src: string): PostMedia => ({ src, type: "video" });
 
 export const galleryPosts: GalleryPost[] = [
   {
+    id: "global-youth-poster-2026",
+    category: "global",
+    title_en: "Your poster could hang inside the UN in Geneva",
+    title_es: "Tu cartel puede colgar dentro de la ONU, en Ginebra",
+    caption_en:
+      "Our president Carlos Olivera is part of the Advisory Group of Youth4Rights, the youth branch of the Global Alliance for Human Rights, and from there the Global Youth Poster Competition was launched: a worldwide poster contest with one question, what does democracy mean to you? It is open to young people aged 15 to 25 from any country, Bolivia included, free, one poster per person, designed in vertical A0 format and submitted as a PDF through a Drive link in the official form. It must be your own work, made without artificial intelligence. The jury will select 10 posters to be exhibited at the Palais des Nations in Geneva on 16 and 17 November. Deadline: 31 October. The call is in English; if you need help with the requirements, message us and we will walk you through it. Official call: globalalliance.un.org/news-and-events/global-youth-poster-competition",
+    caption_es:
+      "Nuestro presidente, Carlos Olivera, forma parte del Grupo Asesor de Youth4Rights, la rama juvenil de la Global Alliance for Human Rights, y desde ahí se lanzó el Global Youth Poster Competition: un concurso mundial de carteles con una sola pregunta, ¿qué significa la democracia para vos? Es para jóvenes de 15 a 25 años de cualquier país, Bolivia incluida, gratis y con un solo cartel por persona, diseñado en formato A0 vertical y enviado en PDF pegando un enlace de Drive en el formulario oficial. Tiene que ser obra tuya, sin inteligencia artificial. El jurado elegirá 10 carteles que se exhibirán en el Palacio de las Naciones de Ginebra el 16 y 17 de noviembre. Cierra el 31 de octubre, no lo dejes para el último día. La convocatoria está en inglés; si necesitás ayuda con los requisitos, escribinos y te acompañamos. Convocatoria oficial: globalalliance.un.org/news-and-events/global-youth-poster-competition",
+    location_en: "Youth4Rights · Global Alliance for Human Rights",
+    location_es: "Youth4Rights · Global Alliance for Human Rights",
+    date_en: "October 2026",
+    date_es: "Octubre 2026",
+    media: [vid("/gallery/global-youth-poster-competition-youth4rights-bookcubers.mp4")],
+  },
+  {
     id: "destacados-bolivia-2026",
     category: "community",
     title_en: "Our founder Carlos receives the DESTACADOS BOLIVIA 2026 International Award",
