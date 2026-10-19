@@ -28,6 +28,31 @@ const vid = (src: string): PostMedia => ({ src, type: "video" });
 
 export const galleryPosts: GalleryPost[] = [
   {
+    id: "destacados-bolivia-2026",
+    category: "community",
+    title_en: "Our founder Carlos receives the DESTACADOS BOLIVIA 2026 International Award",
+    title_es: "Nuestro fundador Carlos recibe el Galardón Internacional DESTACADOS BOLIVIA 2026",
+    caption_en:
+      "At a gala night at the Radisson hotel, the organizing committee and the Association for Education and Development (APED) honored Carlos Andrés Olivera Caballero in the category Youth Leadership: Great Contribution to the Development of Santa Cruz and Bolivia. The official document recognizes his work founding youth support initiatives, his constant commitment to education and volunteering, and his role representing Bolivian youth before international organizations. The committee described him as \"a humble person, an entrepreneur, a volunteer, truly outstanding, a great human being for our country.\" Those of us who work beside him at Bookcubers, the organization he founded in 2019 to democratize access to education and technology, know that is his true essence: leadership exercised as service. Congratulations, Carlos!",
+    caption_es:
+      "En una noche de gala en el hotel Radisson, la comisión organizadora y la Asociación Para la Educación y el Desarrollo (APED) reconocieron a Carlos Andrés Olivera Caballero en la categoría Liderazgo Juvenil: Gran Aporte al Desarrollo de Santa Cruz y Bolivia. El documento oficial destaca su labor al fundar iniciativas de apoyo juvenil, su trabajo constante en educación y voluntariado, y su rol como representante de la juventud boliviana ante organismos internacionales. El comité lo describió como \"una persona humilde, emprendedor, voluntario, muy destacado, un gran ser humano para nuestro país\". Quienes trabajamos a su lado en Bookcubers, la organización que fundó en 2019 para democratizar el acceso a la educación y la tecnología, sabemos que esa es su verdadera esencia: un liderazgo que se ejerce desde el servicio. ¡Felicidades, Carlos!",
+    location_en: "Radisson Hotel, Santa Cruz, Bolivia",
+    location_es: "Hotel Radisson, Santa Cruz, Bolivia",
+    date_en: "October 2026",
+    date_es: "Octubre 2026",
+    media: [
+      img("/gallery/galardon-destacados-bolivia-2026-carlos-olivera-bookcubers.jpg"),
+      vid("/gallery/galardon-destacados-bolivia-2026-carlos-olivera-bookcubers-video.mp4"),
+      img("/gallery/galardon-destacados-bolivia-2026-carlos-olivera-bookcubers-2.jpg"),
+      img("/gallery/galardon-destacados-bolivia-2026-carlos-olivera-bookcubers-3.jpg"),
+      img("/gallery/galardon-destacados-bolivia-2026-carlos-olivera-bookcubers-4.jpg"),
+      vid("/gallery/galardon-destacados-bolivia-2026-carlos-olivera-bookcubers-video-2.mp4"),
+      img("/gallery/galardon-destacados-bolivia-2026-carlos-olivera-bookcubers-5.jpg"),
+      img("/gallery/galardon-destacados-bolivia-2026-carlos-olivera-bookcubers-6.jpg"),
+      img("/gallery/galardon-destacados-bolivia-2026-carlos-olivera-bookcubers-7.jpg"),
+    ],
+  },
+  {
     id: "datec-audits-2026",
     category: "ai-governance",
     title_en: "CJIAL audits how 9 companies use AI, at DATEC's AI Experience Center",
