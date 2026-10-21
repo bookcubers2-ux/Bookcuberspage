@@ -20,7 +20,7 @@ export const activities: Activity[] = [
     date: "April 12, 2019",
     year: 2019,
     location: "Santa Cruz, Bolivia",
-    description: "Bookcubers is formally created after founder Carlos Andrés Oliveira Caballero returns from the U.S. Embassy's Youth Ambassadors Program.",
+    description: "Bookcubers is formally created after founder Carlos Andrés Olivera Caballero returns from the U.S. Embassy's Youth Ambassadors Program.",
     category: "Origin",
     sdgs: [4, 10, 17]
   },

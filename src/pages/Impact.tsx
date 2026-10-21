@@ -3,12 +3,12 @@ import { activities } from "@/data/activities";
 import { Users, BookOpen, Globe, Award, TrendingUp, Target } from "lucide-react";
 
 const impactMetrics = [
-  { icon: Users, value: "1,000+", label: "Youth Directly Impacted", description: "Young people who have participated in our programs" },
-  { icon: BookOpen, value: "54", label: "Programs & Activities", description: "Educational and community programs delivered" },
-  { icon: Globe, value: "15+", label: "Partner Organizations", description: "Strategic partnerships with institutions" },
-  { icon: Award, value: "8", label: "International Awards", description: "Recognition from global organizations" },
-  { icon: TrendingUp, value: "200%", label: "Year-over-Year Growth", description: "Annual growth in program reach" },
-  { icon: Target, value: "17", label: "SDGs Addressed", description: "UN Sustainable Development Goals covered" },
+  { icon: Users, value: "2,230", label: "JOPÓI Users", description: "Blind and visually impaired people who read laws in braille and audio" },
+  { icon: BookOpen, value: "50 / month", label: "Legislative Documents", description: "Made accessible in a pilot with the Departmental Legislative Assembly of Santa Cruz" },
+  { icon: TrendingUp, value: "3% → 52%", label: "Guaraní Speakers (Gengo)", description: "Participants able to hold a basic conversation in Guaraní, measured before and after" },
+  { icon: Globe, value: "150+", label: "Documents in Guaraní", description: "Translated by Vigía Plurilingüe, with 400 users" },
+  { icon: Award, value: "US$27,000", label: "Grants Managed", description: "From AEIF (U.S. Department of State), Youth Democracy Network and UNESCO" },
+  { icon: Target, value: String(activities.length), label: "Activities Documented", description: "Programs and activities recorded since 2019" },
 ];
 
 const successStories = [
@@ -28,8 +28,13 @@ const successStories = [
     year: 2024
   },
   {
-    title: "International Recognition",
-    description: "Our founder's journey from Youth Ambassador to UN speaker inspired dozens of young Bolivians to pursue international opportunities.",
+    title: "Laws Blind Citizens Can Read",
+    description: "JOPÓI converts laws into braille and audio. Today 2,230 blind and visually impaired people use it, and the Departmental Legislative Assembly of Santa Cruz processes 50 legislative documents a month with it.",
+    year: 2025
+  },
+  {
+    title: "Guaraní Spoken Again",
+    description: "In Gengo Academy, in Charagua, the share of participants able to hold a basic conversation in Guaraní rose from 3% to 52%, measured before and after.",
     year: 2025
   }
 ];

@@ -21,9 +21,8 @@ export default function About() {
               About Bookcubers
             </h1>
             <p className="text-xl text-muted-foreground animate-fade-up animation-delay-100">
-              Born from a youth ambassador's vision, Bookcubers has grown into Bolivia's 
-              leading youth empowerment organization, creating opportunities and building 
-              leaders since 2019.
+              Born from a youth ambassador's vision, Bookcubers is a youth-led association
+              in Santa Cruz, Bolivia, creating opportunities and building leaders since 2019.
             </p>
           </div>
         </div>
@@ -40,7 +39,7 @@ export default function About() {
               <div className="space-y-4 text-muted-foreground">
                 <p>
                   Bookcubers was founded on April 12, 2019, in Santa Cruz, Bolivia, by Carlos 
-                  Andrés Oliveira Caballero after his transformative experience as a participant 
+                  Andrés Olivera Caballero after his transformative experience as a participant 
                   in the U.S. Embassy's Youth Ambassadors Program.
                 </p>
                 <p>
@@ -71,12 +70,12 @@ export default function About() {
                   <div className="text-sm text-muted-foreground">Activities</div>
                 </div>
                 <div className="text-center p-4 bg-secondary/50 rounded-xl">
-                  <div className="text-3xl font-heading font-bold text-accent mb-2">1,000+</div>
-                  <div className="text-sm text-muted-foreground">Youth Served</div>
+                  <div className="text-3xl font-heading font-bold text-accent mb-2">2,230</div>
+                  <div className="text-sm text-muted-foreground">JOPÓI Users</div>
                 </div>
                 <div className="text-center p-4 bg-secondary/50 rounded-xl">
-                  <div className="text-3xl font-heading font-bold text-accent mb-2">17</div>
-                  <div className="text-sm text-muted-foreground">SDGs</div>
+                  <div className="text-3xl font-heading font-bold text-accent mb-2">2026</div>
+                  <div className="text-sm text-muted-foreground">Legal Personality</div>
                 </div>
               </div>
             </div>
@@ -188,16 +187,16 @@ export default function About() {
               Transparency & Accountability
             </h2>
             <p className="text-muted-foreground mb-8">
-              We believe in complete transparency with our stakeholders. Our financial reports, 
-              annual impact assessments, and organizational documents are available for public review.
+              Funders, partners and institutions can request our legal documentation and project
+              reports at <a href="mailto:bookcubers2@gmail.com" className="text-accent underline">bookcubers2@gmail.com</a>.
             </p>
             <div className="bg-card rounded-xl p-8 border border-border">
               <h3 className="text-lg font-heading font-semibold text-foreground mb-4">Legal Status</h3>
               <div className="text-left space-y-3 text-sm text-muted-foreground">
-                <p>• <strong className="text-foreground">Registered Name:</strong> Bookcubers NGO</p>
-                <p>• <strong className="text-foreground">Legal Status:</strong> Non-Governmental Organization</p>
-                <p>• <strong className="text-foreground">Registration:</strong> Santa Cruz, Bolivia</p>
-                <p>• <strong className="text-foreground">Founded:</strong> April 12, 2019</p>
+                <p>• <strong className="text-foreground">Registered Name:</strong> Asociación Juvenil Bookcubers</p>
+                <p>• <strong className="text-foreground">Legal Status:</strong> Non-profit civil association</p>
+                <p>• <strong className="text-foreground">Legal Personality:</strong> Resolución Administrativa RA SJ SJD DAJ PJ 2026 N° 229, March 27, 2026, Gobierno Autónomo Departamental de Santa Cruz</p>
+                <p>• <strong className="text-foreground">Founded:</strong> April 12, 2019 (volunteer collective until 2026)</p>
                 <p>• <strong className="text-foreground">Focus Areas:</strong> Youth Development, Education, Leadership</p>
               </div>
             </div>
