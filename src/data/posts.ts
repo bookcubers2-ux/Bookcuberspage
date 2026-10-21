@@ -321,12 +321,12 @@ export const galleryPosts: GalleryPost[] = [
   {
     id: "gengo-academy",
     category: "sovereignty",
-    title_en: "Gengo Academy in action — AI and digital rights in Guaraní",
-    title_es: "Gengo Academy en acción — IA y derechos digitales en guaraní",
+    title_en: "Gengo Academy in action: Guaraní youth recovering their language",
+    title_es: "Gengo Academy en acción: jóvenes guaraníes recuperando su lengua",
     caption_en:
-      "Gengo Academy brings technology, AI and digital rights to Guaraní communities in their own language, funded by a U.S. State Department AEIF grant. Recognized publicly by the U.S. Embassy and the Municipal Government.",
+      "Gengo Academy helps Guaraní youth in Charagua recover their own language, with an offline learning website and printed textbooks, funded by a U.S. State Department AEIF grant. The share of participants able to hold a basic conversation in Guaraní rose from 3% to 52%, measured before and after. Recognized publicly by the U.S. Embassy and the Municipal Government.",
     caption_es:
-      "Gengo Academy lleva tecnología, IA y derechos digitales a las comunidades guaraníes en su propia lengua, con el financiamiento de un grant AEIF del Departamento de Estado de EE.UU. Reconocida públicamente por la Embajada de EE.UU. y el Gobierno Municipal.",
+      "Gengo Academy ayuda a jóvenes guaraníes de Charagua a recuperar su propia lengua, con un sitio de aprendizaje que funciona sin internet y libros de texto impresos, con el financiamiento de un grant AEIF del Departamento de Estado de EE.UU. La proporción de participantes capaces de sostener una conversación básica en guaraní pasó del 3% al 52%, medida antes y después. Reconocida públicamente por la Embajada de EE.UU. y el Gobierno Municipal.",
     location_en: "Charagua, Bolivia",
     location_es: "Charagua, Bolivia",
     date_en: "Ongoing program",
