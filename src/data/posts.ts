@@ -28,6 +28,27 @@ const vid = (src: string): PostMedia => ({ src, type: "video" });
 
 export const galleryPosts: GalleryPost[] = [
   {
+    id: "ydn-minigrant-jopoi-impact-story-2026",
+    category: "accessibility",
+    title_en: "JOPÓI, a Youth Democracy Network Mini Grants impact story",
+    title_es: "JOPÓI, historia de impacto de los Mini Grants de Youth Democracy Network",
+    caption_en:
+      "Youth Democracy Network has published the impact story of JOPÓI, the project we carried out in Bolivia with their Mini Grant. In Santa Cruz, only 2 of more than 430 departmental laws mention disability, and those laws are published as scanned PDFs that screen readers cannot open. So 15 young people with disabilities (10 with visual impairment and 5 with other disabilities) led an audit of their own Departmental Legislative Assembly: we built JOPÓI, a free app that reads laws aloud and turns them into braille and Easy Read; fellows with visual impairment took the legislators' seats while legislators followed a real bill blindfolded; and we took the session to Bolivia's largest public university, with 200 attendees. Afterwards, legislators rated their own Assembly 1.07 out of 5 for people with disabilities, and 14 of 15 gave the lowest possible score. The fellows documented 20 institutional barriers, and by August 4 in 10 were being solved on the spot, up from 1 in 10. More than 24,000 people watched the first session live, we taught ourselves to program and built JOPOBOT and INTERMUN, and a national deputy committed in writing to support INTERMUN. Thank you, Youth Democracy Network, for the opportunity, for your trust and for funding young people who decided to change how a parliament listens. This is a milestone that will mark generations of Bolivians with disabilities, and we are only just beginning.",
+    caption_es:
+      "Youth Democracy Network publicó la historia de impacto de JOPÓI, el proyecto que hicimos en Bolivia gracias a su Mini Grant. En Santa Cruz, solo 2 de más de 430 leyes departamentales mencionan la discapacidad, y esas leyes se publican como PDF escaneados que ningún lector de pantalla puede abrir. Por eso, 15 jóvenes con discapacidad (10 con discapacidad visual y 5 con otras discapacidades) lideraron una auditoría a su propia Asamblea Legislativa Departamental: creamos JOPÓI, una app gratuita que lee las leyes en voz alta y las convierte a braille y Lectura Fácil; las y los becarios con discapacidad visual ocuparon las curules mientras las y los asambleístas seguían un proyecto de ley real con los ojos vendados; y llevamos la sesión a la universidad pública más grande de Bolivia, con 200 asistentes. Después, las y los legisladores calificaron a su propia Asamblea con 1,07 sobre 5 en accesibilidad, y 14 de 15 dieron la nota más baja posible. Las y los becarios documentaron 20 barreras institucionales, y para agosto 4 de cada 10 se resolvían en el momento, cuando antes era 1 de cada 10. Más de 24.000 personas siguieron en vivo la primera sesión, aprendimos a programar por nuestra cuenta y construimos JOPOBOT e INTERMUN, y un diputado nacional comprometió por escrito su apoyo a INTERMUN. Gracias, Youth Democracy Network, por la oportunidad, por la confianza y por el financiamiento a jóvenes que decidieron cambiar la forma en que un parlamento escucha. Este es un hito que va a marcar a generaciones de bolivianas y bolivianos con discapacidad, y recién estamos comenzando.",
+    location_en: "Departmental Legislative Assembly of Santa Cruz, Bolivia",
+    location_es: "Asamblea Legislativa Departamental de Santa Cruz, Bolivia",
+    date_en: "October 2026",
+    date_es: "Octubre 2026",
+    media: [
+      img("/gallery/ydn-minigrant-jopoi-bookcubers-1.jpg"),
+      img("/gallery/ydn-minigrant-jopoi-bookcubers-2.jpg"),
+      img("/gallery/ydn-minigrant-jopoi-bookcubers-3.jpg"),
+      img("/gallery/ydn-minigrant-jopoi-bookcubers-4.jpg"),
+      img("/gallery/ydn-minigrant-jopoi-bookcubers-5.jpg"),
+    ],
+  },
+  {
     id: "global-youth-poster-2026",
     category: "global",
     title_en: "Your poster could hang inside the UN in Geneva",
