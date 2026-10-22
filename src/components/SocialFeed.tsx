@@ -9,6 +9,7 @@ import {
   ChevronRight,
   Heart,
   Share2,
+  ExternalLink,
   BadgeCheck,
   MapPin,
   Images,
@@ -235,6 +236,18 @@ const PostCard = ({
         >
           <Share2 className="w-6 h-6" />
         </button>
+        {post.source_url && (
+          <a
+            href={post.source_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t(lang, "View the original post", "Ver la publicación original")}
+            className="flex items-center gap-1.5 rounded-full border border-border px-3 py-1 text-xs font-semibold text-foreground hover:bg-accent/10 hover:text-accent transition-colors"
+          >
+            <ExternalLink className="w-3.5 h-3.5" />
+            {t(lang, "Original post", "Publicación original")}
+          </a>
+        )}
         <span className="ml-auto flex items-center gap-1.5 text-xs text-muted-foreground">
           <Images className="w-4 h-4" />
           {photoCount > 0 && `${photoCount} ${t(lang, photoCount === 1 ? "photo" : "photos", photoCount === 1 ? "foto" : "fotos")}`}
@@ -265,16 +278,6 @@ const PostCard = ({
           >
             {expanded ? t(lang, "See less", "Ver menos") : t(lang, "See more", "Ver más")}
           </button>
-        )}
-        {post.source_url && (
-          <a
-            href={post.source_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block text-sm font-semibold text-accent mt-2 hover:underline"
-          >
-            {t(lang, "View the original post ↗", "Ver la publicación original ↗")}
-          </a>
         )}
         {post.credit !== null && (
           <p className="text-xs italic text-muted-foreground mt-2">
