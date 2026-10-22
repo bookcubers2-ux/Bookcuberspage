@@ -20,6 +20,7 @@ export interface GalleryPost {
   date_es: string;
   media: PostMedia[];
   credit?: string | null;
+  source_url?: string; // original post (e.g. LinkedIn), shown as a link
   pinned?: boolean;
 }
 
@@ -40,6 +41,8 @@ export const galleryPosts: GalleryPost[] = [
     location_es: "Asamblea Legislativa Departamental de Santa Cruz, Bolivia",
     date_en: "October 2026",
     date_es: "Octubre 2026",
+    source_url:
+      "https://www.linkedin.com/posts/youth-democracy-network_ydnminigrantshashtag-youthdemocracynetworkhashtag-activity-7519044363558227969-eqM2",
     media: [
       img("/gallery/ydn-minigrant-jopoi-bookcubers-1.jpg"),
       img("/gallery/ydn-minigrant-jopoi-bookcubers-2.jpg"),

@@ -266,6 +266,16 @@ const PostCard = ({
             {expanded ? t(lang, "See less", "Ver menos") : t(lang, "See more", "Ver más")}
           </button>
         )}
+        {post.source_url && (
+          <a
+            href={post.source_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-sm font-semibold text-accent mt-2 hover:underline"
+          >
+            {t(lang, "View the original post ↗", "Ver la publicación original ↗")}
+          </a>
+        )}
         {post.credit !== null && (
           <p className="text-xs italic text-muted-foreground mt-2">
             {t(lang, "Photos", "Fotos")}: © Bookcubers
