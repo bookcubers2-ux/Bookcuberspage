@@ -29,6 +29,21 @@ const vid = (src: string): PostMedia => ({ src, type: "video" });
 
 export const galleryPosts: GalleryPost[] = [
   {
+    id: "to-check-a-page-leave-it-2026",
+    category: "education",
+    title_en: "To check a page, you have to leave it",
+    title_es: "Para verificar una página, hay que salir de ella",
+    caption_en:
+      "How do you teach a teenager to check before sharing? Not by reading a page more carefully: professional fact-checkers leave it and open new tabs to find out who is behind it. It is called lateral reading. In a Stanford study, 10 historians and 25 undergraduates stayed on the page, swayed by official-looking logos, while 10 professional fact-checkers left it and judged better. Growing up with phones does not guarantee the habit: 96% of 3,446 US high-school students did not look into a climate website's ties to the fossil-fuel industry. In Gengo Academy, the offline programme we ran in Bolivia in Guaraní, Quechua and Spanish for more than 1,200 young people, verification before sharing rose from 30% to 78%, on an indicator built from misinformation incidents reported to the municipal police. That is our own before-and-after data, not an experiment. The evidence on teaching this is still young: in one US district, 271 students who took six lessons improved more at judging online sources than 228 who did not. And doubting everything is not checking. Nobody is born knowing this; it is a skill. Next time you are not sure about some information, open a new tab and verify it yourself.",
+    caption_es:
+      "¿Cómo se le enseña a un adolescente a verificar antes de compartir? No leyendo la página con más cuidado: los verificadores profesionales salen de ella y abren pestañas nuevas para descubrir quién está detrás. Se llama lectura lateral. En un estudio de Stanford, 10 historiadores y 25 universitarios se quedaron en la página, atraídos por logos de apariencia oficial, mientras que 10 verificadores profesionales la dejaron y la juzgaron mejor. Crecer con celulares no garantiza el hábito: el 96 % de 3.446 estudiantes de secundaria de EE. UU. no investigó los vínculos de una web climática con la industria de combustibles fósiles. En Gengo Academy, el programa sin internet que dirigimos en Bolivia en guaraní, quechua y español para más de 1.200 jóvenes, la verificación antes de compartir subió del 30 % al 78 %, según un indicador construido con incidentes de desinformación denunciados ante la policía municipal. Son nuestros propios datos de antes y después, no un experimento. La evidencia sobre cómo enseñar esto todavía es joven: en un distrito de EE. UU., 271 estudiantes que tomaron seis lecciones mejoraron más al juzgar fuentes en línea que 228 que no las tomaron. Y dudar de todo no es verificar. Nadie nace sabiéndolo: es una habilidad. La próxima vez que dudes de alguna información, abrí una pestaña nueva y verificalo vos mismo.",
+    location_en: "Santa Cruz de la Sierra, Bolivia",
+    location_es: "Santa Cruz de la Sierra, Bolivia",
+    date_en: "October 2026",
+    date_es: "Octubre 2026",
+    media: [vid("/gallery/to-check-a-page-leave-it-carlos-olivera-bookcubers.mp4")],
+  },
+  {
     id: "ydn-minigrant-jopoi-impact-story-2026",
     category: "accessibility",
     title_en: "JOPÓI, a Youth Democracy Network Mini Grants impact story",
