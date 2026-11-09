@@ -42,10 +42,9 @@ export const galleryPosts: GalleryPost[] = [
     date_en: "November 2026",
     date_es: "Noviembre 2026",
     media: [
-      img("/gallery/rightsx-summit-2026-bookcubers-1.jpg"),
-      img("/gallery/rightsx-summit-2026-bookcubers-2.jpg"),
-      img("/gallery/rightsx-summit-2026-bookcubers-3.jpg"),
-      img("/gallery/rightsx-summit-2026-bookcubers-4.jpg"),
+      img("/gallery/rightsx-summit-2026-reunion-1.jpg"),
+      img("/gallery/rightsx-summit-2026-reunion-2.jpg"),
+      img("/gallery/rightsx-summit-2026-panel-b.jpg"),
     ],
     credit: null,
   },
