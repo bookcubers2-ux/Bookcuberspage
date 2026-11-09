@@ -29,6 +29,27 @@ const vid = (src: string): PostMedia => ({ src, type: "video" });
 
 export const galleryPosts: GalleryPost[] = [
   {
+    id: "rightsx-summit-2026",
+    category: "global",
+    title_en: "Carlos Olivera joins the RightsX Summit 2026 as a collaborator and will support Panel B",
+    title_es: "Carlos Olivera se suma al RightsX Summit 2026 como colaborador y apoyará el Panel B",
+    caption_en:
+      "On 9 November, our president Carlos Olivera met with UN Human Rights and the committee of the RightsX Summit 2026, which takes place on 18 and 19 November in Geneva and online. He is also being named as a collaborator of the Summit, and on Thursday 19 November he will support Panel B, \"Building the future\", with his expertise in agentic AI and civic platforms, the field behind the civic tools Bookcubers builds in Bolivia, such as JOPÓI. RightsX is a global platform for human rights innovation that brings together governments, the UN system, civil society, the private sector and innovators. The 2026 Summit, a catalytic initiative of the Global Alliance for Human Rights, runs over two days. On 18 November, an online Solutions Festival of interactive roundtables on practical challenges for human rights in the digital age, with sessions such as WITNESS on protecting rights when anything can be faked and Access Now on internet shutdowns with no end. On 19 November, a hybrid high-level day at the Palais des Nations with keynotes, panels and lightning talks. Panel B, from 11:20 to 12:30 Geneva time (6:20 to 7:30 a.m. in Bolivia), asks how data, technology and emerging capabilities can enable a future-ready human rights system, with Danielle Bell, Anwar Mahfoudh, Anita Gurumurthy, Sara Wahedi and Daniel Odongo. Programme and registration: rightsx.ohchr.org",
+    caption_es:
+      "El 9 de noviembre, nuestro presidente Carlos Olivera se reunió con Derechos Humanos de la ONU y el comité del RightsX Summit 2026, que se realiza el 18 y 19 de noviembre en Ginebra y en línea. También está siendo nombrado colaborador del Summit, y el jueves 19 de noviembre apoyará el Panel B, \"Building the future\" (Construyendo el futuro), con su experiencia en IA agéntica y plataformas cívicas, el campo detrás de las herramientas cívicas que Bookcubers construye en Bolivia, como JOPÓI. RightsX es una plataforma global para la innovación en derechos humanos que reúne a gobiernos, el sistema de la ONU, la sociedad civil, el sector privado e innovadores. El Summit 2026, una iniciativa catalizadora de la Global Alliance for Human Rights, dura dos días. El 18 de noviembre, un Solutions Festival en línea con mesas redondas interactivas sobre desafíos prácticos de los derechos humanos en la era digital, con sesiones como la de WITNESS sobre cómo proteger los derechos cuando todo puede falsificarse y la de Access Now sobre los apagones de internet que no terminan. El 19 de noviembre, una jornada de alto nivel híbrida en el Palacio de las Naciones con discursos centrales, paneles y charlas relámpago. El Panel B, de 11:20 a 12:30 hora de Ginebra (de 6:20 a 7:30 de la mañana en Bolivia), se pregunta cómo los datos, la tecnología y las capacidades emergentes pueden habilitar un sistema de derechos humanos preparado para el futuro, con Danielle Bell, Anwar Mahfoudh, Anita Gurumurthy, Sara Wahedi y Daniel Odongo. Programa e inscripción: rightsx.ohchr.org",
+    location_en: "RightsX Summit 2026 · Geneva and online",
+    location_es: "RightsX Summit 2026 · Ginebra y en línea",
+    date_en: "November 2026",
+    date_es: "Noviembre 2026",
+    media: [
+      img("/gallery/rightsx-summit-2026-bookcubers-1.jpg"),
+      img("/gallery/rightsx-summit-2026-bookcubers-2.jpg"),
+      img("/gallery/rightsx-summit-2026-bookcubers-3.jpg"),
+      img("/gallery/rightsx-summit-2026-bookcubers-4.jpg"),
+    ],
+    credit: null,
+  },
+  {
     id: "to-check-a-page-leave-it-2026",
     category: "education",
     title_en: "To check a page, you have to leave it",
